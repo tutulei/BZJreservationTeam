@@ -1,0 +1,69 @@
+.page{
+   background: #eee;
+}
+
+.img{
+  height: auto;
+  display: block;
+}
+
+.imageScroll{
+  display:flex; 
+  justify-content: center;
+}
+
+#container{
+  background-color: white;
+  padding: 0;
+}
+
+.item{
+  width: 100%;
+  font-size: 30rpx;
+  display: flex;
+  height: 80rpx;
+  border-bottom: 1px solid #DBDBDB;
+  flex-direction: row;
+  /* justify-content: space-between; */
+  align-items: center;
+}
+
+.item text{
+  padding-left: 30rpx;
+  line-height: 80rpx;
+}
+
+.icon{
+  display: block;
+  width: 5%;
+  height: auto;
+  float: right;
+  margin-left: 10px;
+}
+
+.left{
+  padding-left: 30rpx;
+}
+
+.place{
+  padding-left: 160px;
+}
+
+.pay{
+  padding-left: 220px;
+  color: green;
+}
+
+.container2{
+  background-color: white;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.button{
+  margin: 20px;
+  width: 100%;
+  background-color:  #159de3;
+  color:white;
+  /* position: fixed; */
+}

@@ -1,0 +1,102 @@
+/* pages/home/home.wxss */
+.img{
+  width: 100%
+}
+
+.container{
+  background-color:#eeeeee;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: content-box;
+}
+
+
+.list-container{
+  padding: 0
+}
+
+.list-container{
+  padding: 0
+}
+ 
+.list-item{
+  height: 100rpx;
+  display: flex;
+  flex-direction: row;
+  padding:20rpx;
+}
+ 
+.left{
+  width: 100rpx;
+  height:100rpx;
+}
+ 
+.right{
+  width: 590rpx;
+  height: 100rpx;
+  margin-left: 20rpx;
+  display: flex;
+  flex-direction: row;
+}
+ 
+.title{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 310rpx;
+}
+ 
+.name{
+  font-size: 50rpx;
+  color: #000;
+}
+ 
+.phone{
+  font-size: 35rpx;
+  color:darkgrey;
+}
+ 
+ 
+.time{
+  width: 200rpx;
+  color: rgb(219, 64, 64);
+  font-size: 30rpx;
+}
+
+.homeusermsg{
+  display: flex;
+  flex-direction: left;
+  justify-content: flex-start;
+}
+
+
+
+.row{
+  /* border-top: 1px black; */
+  display: flex;
+  flex-direction: row;
+  flex-flow: row nowrap;
+  justify-content: center;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  background-color: white;
+}
+
+.column{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5px 23px;
+}
+
+.homeusermsg{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+
+}

@@ -1,0 +1,8 @@
+/* pages/user/user.wxss */
+
+.fixedmsg{
+  color: gray;
+}
+.section{
+margin: 10px;
+}
