@@ -76,7 +76,6 @@ Page({
     this.setData({
       code: e.detail.value,
     })
-    // console.log(e.detail.value+":::"+this.data.code)
   },
 
 
@@ -137,7 +136,7 @@ Page({
             is = true
             console.log("hello admin")
             wx.navigateTo({
-              url: '../admin/admin'
+              url: '../resermanager/resermanager'
             })
           }
         },
