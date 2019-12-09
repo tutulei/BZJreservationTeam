@@ -29,7 +29,7 @@ Page({
     appreason: "",
     hastools: false,
     toolsmsg: "",
-
+    list:{},
   },
 
   /**
@@ -162,11 +162,13 @@ Page({
               icon: 'success',
               duration: 2000
             });
-            this.putReserMsg();
+            this.saveReserMsg();
             var pages = getCurrentPages();
             var prevPage = pages[pages.length - 2];
             prevPage.setData({
-              iswrite: true
+              iswrite: true,
+              list:this.data.list
+
             });
             wx.navigateBack({
               delta: 1,
@@ -185,11 +187,9 @@ Page({
       })
   },
 
-  putReserMsg: function() {
-    const db = wx.cloud.database()
-    db.collection('reservation').add({
-      // 要插入的数据
-      data: {
+  saveReserMsg: function() {
+    this.setData({
+      list:{
         user_no: app.globalData.usermsg.user_no,
         reservation_phone: this.data.phone,
         reservation_date: this.data.date,
@@ -202,19 +202,8 @@ Page({
         reservation_tools: this.data.toolsmsg,
         reservation_from: this.data.appsector,
       }
-    }).then(res => {
-      // 插入数据成功
-      // console.log(res._id)
-      this.setData({
-        inputhid: true,
-        fixedhid: false,
-      })
-      this.creatInviteCode(res._id)
-      this.userAddId(res._id)
-    }).catch(err => {
-      // 插入数据失败
-      console.log(err)
     })
+    console.log(this.data.list)
   },
   setVenueMsg: function() {
     const db = wx.cloud.database()
@@ -240,74 +229,4 @@ Page({
       }
     })
   },
-  userAddId: function(id) {
-    const db = wx.cloud.database();
-    db.collection('user').doc(app.globalData.usermsg._id).update({
-      data: {
-        reservation_id: 'id',
-        user_status: app.globalData.STATUS_USER_HR,
-      }
-    }).then(res => {
-      // console.log(res)
-    })
-
-  },
-
-  creatInviteCode: function(id) {
-    // console.log(id)
-    const db = wx.cloud.database()
-    var code = this.creatCode()
-    while (!this.isuniqueCode(code)) {
-      code = this.creatCode()
-    }
-    db.collection('invite').add({
-      // 要插入的数据
-      data: {
-        invite_code: code,
-        reservation_id: id,
-      }
-    }).then(res => {
-      // 插入数据成功
-      console.log(res)
-    }).catch(err => {
-      // 插入数据失败
-      console.log(err)
-    })
-  },
-  creatCode: function() {
-    var arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-    var code = ""
-    for (var i = 0; i < 4; i++) {
-      var pos = Math.round(Math.random() * (arr.length - 1));
-      code += arr[pos];
-    }
-    return code
-  },
-  isuniqueCode: function(code) {
-    var is = true;
-    const db = wx.cloud.database()
-    db.collection('invite').where({
-      invite_code: code,
-    }).get({
-      success: res => {
-        // console.log(res)
-        if (res.data[0] === undefined) {
-          // console.log("isNULL")
-          is = true
-        } else {
-          // console.log(res.data[0])
-          is = false
-        }
-      },
-      fail: err => {
-        wx.showToast({
-          icon: 'none',
-          title: '查询记录失败'
-        })
-        console.error('[数据库] [查询记录] 失败：', err)
-      }
-    })
-    return is
-  },
-
 })
