@@ -5,7 +5,13 @@
   <view id="username">{{username}}</view>
 </view>
 
-<view id="announcement">{{announcement}}</view>
+<view class='notice-wrap' hidden='{{hideNotice}}'>
+<view class="notice">
+<text class="notice-text">{{announcement}}</text>
+</view>
+<view bindtap='switchNotice' class="closeView">x</view>
+</view>
+
 <!-- <text>----------我是分割线----------\n</text> -->
 <!-- <text bindtap="appoint">这里是当前预约信息（可点击查看）\n</text> -->
 <text class="title">当前预约</text>
@@ -29,10 +35,9 @@
 
 <text class="title">历史预约\n</text>
 <view hidden="{{!hisnone}}" >空空如也</view>
-<view class="container list-container" >
+<view class="container list-container"  >
   <view class="list-item" data-index="{{index}}" bindtap="appoint2"  wx:for="{{historyList}}" >
-    <!-- <view > -->
-      <image class="item" class="left" src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/img2.jpg"></image>
+      <image class="left" src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/img2.jpg"></image>
       <view class="right">
         <view class="title1">
           <view class="name">{{item.venuename}}</view>
@@ -40,7 +45,7 @@
         </view>
         <view class="status">{{item.status}}</view>
       <!-- </view> -->
-    </view>
+      </view>
   </view>
 </view>
 <!-- <view class="container"> -->

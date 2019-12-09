@@ -1,37 +1,31 @@
-/* pages/home/home.wxss */
+pages/home/home.wxss
 
-.img{
-  width: 50%
+.img {
+  width: 50%;
 }
 
-.homeusermsg{
+.homeusermsg {
   display: flex;
   flex-direction: row;
-  border-block-end: 1px solid #eeeeee;
-  padding-top:10px;
-  padding-bottom: 10px; 
+  background-color: #e27d08c9;
+  color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
   width: 100%;
 }
 
-#userstatus{
+#userstatus {
   display: block;
   margin-left: 10px;
 }
 
-#username{
+#username {
   display: block;
   position: fixed;
   right: 10px;
 }
 
-#announcement{
-  padding: 10px;
-  text-indent: 2em;
-  background-color: red;
-  color: white;
-}
-
-.row{
+.row {
   display: flex;
   flex-direction: row;
   flex-flow: row nowrap;
@@ -42,7 +36,7 @@
   background-color: white;
 }
 
-.column{
+.column {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -52,77 +46,124 @@
   height: 60px;
 }
 
-.title{
+.title {
   display: block;
-  margin-top: 20px;
+  width: 100%;
+  margin-top: 40px;
+  padding: 5px;
+  padding-left: 20px;
   font-weight: bold;
+   background-color: #159de3;
+   color: white;
 }
 
 /* pages/home/home.wxss */
-.img{
-width: 100%
+
+.img {
+  width: 100%;
 }
 
-.container{
-background-color:#eeeeee;
-height: 100%;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: space-between;
-padding: 200rpx 0;
-box-sizing: content-box;
-margin-top: 20px;
+.container {
+  background-color: #eee;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0px;
+  box-sizing: content-box;
 }
 
-.list-container{
-padding: 0
+.list-container {
+  padding: 0;
 }
 
-.list-item{
-height: 100rpx;
-display: flex;
-flex-direction: row;
-padding:20rpx;
-}
-.left{
-width: 100rpx;
-height:100rpx;
+.list-item {
+  height: 100rpx;
+  display: flex;
+  flex-direction: row;
+  padding: 20rpx;
 }
 
-.right{
-width: 590rpx;
-height: 100rpx;
-margin-left: 40px;
-display: flex;
-flex-direction: row;
+.left {
+  padding-left: 55px;
+  width: 100rpx;
+  height: 100rpx;
 }
 
-.title1{
-flex: 1;
-display: flex;
-flex-direction: column;
-width: 310rpx;
+.right {
+  width: 590rpx;
+  height: 100rpx;
+  margin-left: 30px;
+  display: flex;
+  flex-direction: row;
 }
 
-.name{
-font-size: 40rpx;
-color: #000;
+.title1 {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 310rpx;
 }
 
-.date{
-font-size: 35rpx;
-color:#159de3;
+.time {
+  font-size: 40rpx;
+  color: #000;
 }
 
-.status{
-width: 200rpx;
-color: rgb(219, 64, 64);
-font-size: 30rpx;
+.date {
+  font-size: 35rpx;
+  color: #159de3;
 }
 
-.homeusermsg{
-display: flex;
-flex-direction: left;
-justify-content: flex-start;
+.status {
+  width: 200rpx;
+  color: rgb(219, 64, 64);
+  font-size: 30rpx;
+}
+
+.homeusermsg {
+  display: flex;
+  flex-direction: left;
+  justify-content: flex-start;
+}
+
+.notice-wrap {
+  width: 100%;
+  text-overflow: ellipsis;
+  background: #ffebda;
+  height: 50px;
+}
+
+.notice{
+  margin-right:30px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.notice-text {
+  font-size: 30rpx;
+  animation: remindMessage 14s linear infinite;
+  width: 100%;
+  margin-top: 15px;
+  color: #d09868;
+  display: block;
+}
+
+@keyframes remindMessage {
+  0% {
+    -webkit-transform: translateX(90%);
+  }
+  100% {
+    -webkit-transform: translateX(-180%);
+  }
+}
+
+.closeView {
+  position: absolute;
+  right: 10rpx;
+  top: 105rpx;
+  font-size: 35rpx;
+  color: #d09868;
 }

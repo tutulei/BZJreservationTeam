@@ -7,23 +7,21 @@ Page({
    * 页面的初始数据
    */
   data: {
-    username:"请去“我的”完善个人信息",
+    username: "请去“我的”完善个人信息",
     userstatus: app.globalData.STATUS_USER_TR,
-    userno:"2333",
+    userno: "2333",
 
-    announcement:"",
+    announcement: "",
 
-    rsid:"",
-    rsstatus:"",
+    rsid: "",
+    rsstatus: "",
     rsdate: null,
-    venuename:"",
-    venuetime:"",
-    venue_id:"",
-    nowList:[],
+    venuename: "",
+    venuetime: "",
+    venue_id: "",
+    nowList: [],
     nownoen:true,
     hisnone:true,
-    historyList: [],
-    url1: "cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/ihome.png",
     url2: "cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/adduser.png",
     url3: "cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/add.png",
     url4: "cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/user.png"
@@ -35,7 +33,7 @@ Page({
   onLoad: function (options) {
     this.getUsermsg();
     this.getAnnouncement();
-    
+
   },
 
   /**
@@ -87,16 +85,22 @@ Page({
 
   },
 
+  switchNotice: function () {
+    this.setData({
+      hideNotice: true
+    })
+  },
+
   appoint: function () {
     wx.navigateTo({
-      url: '../detail/detail?reser_id='+this.data.rsid+"&venue_id="+this.data.venue_id
+      url: '../detail/detail?reser_id=' + this.data.rsid + "&venue_id=" + this.data.venue_id
     })
   },
 
   appoint2: function (event) {
     // console.log(event)
     var i = event.currentTarget.dataset.index
-    console.log("sadasd"+i)
+    console.log("sadasd" + i)
     wx.navigateTo({
       url: '../detail/detail?reser_id=' + this.data.historyList[i].reserid + "&venue_id=" + this.data.historyList[i].venueid
     })
@@ -108,11 +112,11 @@ Page({
   },
 
   button2: function () {
-    if(app.globalData.hasuser){
+    if (app.globalData.hasuser) {
       wx.navigateTo({
         url: '../invite/invite'
       })
-    }else{
+    } else {
       wx.showToast({
         title: '请先完善个人信息',
         icon: 'none',
@@ -135,7 +139,7 @@ Page({
       })
     }
   },
-  
+
   button4: function () {
     wx.navigateTo({
       url: '../user/user'
@@ -153,7 +157,7 @@ Page({
         this.setData({
           username: data.user_name,
           userstatus: data.user_status,
-          userno:data.user_no
+          userno: data.user_no
         })
         app.globalData.hasuser = true
         this.getNowReservation();
@@ -169,7 +173,7 @@ Page({
     })
   },
 
-  getAnnouncement:function(){
+  getAnnouncement: function () {
     const db = wx.cloud.database()
     db.collection('announcement').where({
       msg_id: 1,
@@ -179,7 +183,7 @@ Page({
         this.setData({
           announcement: res.data[0].msg,
         })
-        
+
       },
       fail: err => {
         wx.showToast({
@@ -193,7 +197,7 @@ Page({
   getNowReservation: function () {
     const db = wx.cloud.database()
     const _ = db.command
-    
+
     // console.log(this.data.userno)
     db.collection('reservation').where({
       user_no: this.data.userno,
@@ -220,7 +224,7 @@ Page({
       }
     })
   },
-  getVenueName:function(id){
+  getVenueName: function (id) {
     // console.log("asdasda",id)
     const db = wx.cloud.database()
     db.collection('venue').where({
@@ -231,9 +235,9 @@ Page({
         var data = res.data[0]
         this.setData({
           venuename: data.venue_name,
-          venuetime:data.venue_time,
+          venuetime: data.venue_time,
         })
-      this.setNowReservation();
+        this.setNowReservation();
 
       },
       fail: err => {
@@ -245,7 +249,7 @@ Page({
       }
     })
   },
-  setNowReservation:function(){
+  setNowReservation: function () {
     var jstr = {}
     jstr.name = this.data.venuename + " " + this.data.venuetime
     jstr.date = this.data.rsdate
@@ -254,7 +258,7 @@ Page({
       nowList: [jstr],
     })
   },
-  setHistoryReservation:function(){
+  setHistoryReservation: function () {
     const db = wx.cloud.database()
     const _ = db.command
     // console.log(this.data.userno)
@@ -267,7 +271,7 @@ Page({
         var data = res.data
         // console.log(data)
         var list = []
-        for(var i =0;i<data.length;i++){
+        for (var i = 0; i < data.length; i++) {
           var jstr = {}
           jstr.reserid = data[i]._id
           jstr.reserdate = data[i].reservation_date
@@ -281,11 +285,11 @@ Page({
             historyList: list,
           })
           // console.log(this.data.historyList)
-          this.setHistoryVenue(i,data[i].venue_id)
+          this.setHistoryVenue(i, data[i].venue_id)
 
         }
 
-        
+
       },
       fail: err => {
         wx.showToast({
@@ -296,7 +300,7 @@ Page({
       }
     })
   },
-  setHistoryVenue:function(i,id){
+  setHistoryVenue: function (i, id) {
     const db = wx.cloud.database()
     db.collection('venue').where({
       _id: id,
@@ -309,7 +313,7 @@ Page({
         list[i].venuename = data.venue_name + " " + data.venue_time
         list[i].venuetime = data.venue_time
         this.setData({
-          historyList:list,
+          historyList: list,
         })
         // console.log(this.data.historyList)
         if(this.data.nowList.length>0){
