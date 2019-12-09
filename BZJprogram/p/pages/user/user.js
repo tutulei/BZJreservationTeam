@@ -13,28 +13,28 @@ Page({
       { name: true, value: '女' },
       { name: false, value: '男', checked: 'true' },
     ],
-    inputhid:false,
-    fixedhid:true,
-    name:"",
-    no:"",
+    inputhid: false,
+    fixedhid: true,
+    name: "",
+    no: "",
     sex: "男",
-    phone:"",
-    addr:"",
-    status:"",
+    phone: "",
+    addr: "",
+    status: "",
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-      if(app.globalData.hasuser){
-        this.setUserMsg();
-        this.setData({
-          inputhid: true,
-          fixedhid: false,
-        })
-      }
-      
+    if (app.globalData.hasuser) {
+      this.setUserMsg();
+      this.setData({
+        inputhid: true,
+        fixedhid: false,
+      })
+    }
+
   },
 
   /**
@@ -130,7 +130,7 @@ Page({
   /*
   获取input值
   */
-  getNameInput:function(e){
+  getNameInput: function (e) {
     this.setData({
       name: e.detail.value,
     })
@@ -156,13 +156,13 @@ Page({
     //   sex: e.detail.value? "女" : "男",
     // })
     this.setData({
-      sex: e.detail.value==="true"?"女":"男",
+      sex: e.detail.value === "true" ? "女" : "男",
     })
 
   },
 
 
-  setUserMsg:function(){
+  setUserMsg: function () {
     var data = app.globalData.usermsg;
     this.setData({
       name: data.user_name,
@@ -170,10 +170,10 @@ Page({
       sex: data.user_sex ? "女" : "男",
       phone: data.user_phone,
       addr: data.user_address,
-      status:data.user_status,
+      status: data.user_status,
     })
   },
-  putUserMsg:function(){
+  putUserMsg: function () {
     // collection('user') 获取到数据库中名为 user 的集合
     // add 插入操作
     const db = wx.cloud.database()
@@ -182,9 +182,9 @@ Page({
       data: {
         user_name: this.data.name,
         user_no: this.data.no,
-        user_phone:this.data.phone,
-        user_sex:this.data.sex==="男"?false:true,
-        user_address:this.data.addr,
+        user_phone: this.data.phone,
+        user_sex: this.data.sex === "男" ? false : true,
+        user_address: this.data.addr,
         user_status: app.globalData.STATUS_USER_CR,
       }
     }).then(res => {

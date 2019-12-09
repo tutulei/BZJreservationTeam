@@ -1,41 +1,5 @@
 // pages/date/date.js
 Page({
-
-  /**
-   * 页面的初始数据
-   */
-  data: {
-    venue_id: "",
-    date: "",
-    //日期
-    timeList: [],
-    //可预约天数
-    yyDay: 7,
-    //预约时间段
-    hourList: [
-      { hour: "尚雅楼 10:00-14:00", n: 1, isShow: true },
-      { hour: "尚雅楼 16:00-20:00", n: 2, isShow: true },
-      { hour: "致远楼 10:00-14:00", n: 3, isShow: true },
-      { hour: "致远楼 16:00-20:00", n: 4, isShow: true }
-    ],
-    //是否显示
-    timeShow: false,
-    currentTab: 0,
-    //选择时间
-    chooseHour: "",
-    //选择日期
-    chooseTime: "",
-    hourIndex: -1,
-    //预约时间
-    yyTime: ''
-  },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-  },
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -84,87 +48,72 @@ Page({
   onShareAppMessage: function () {
 
   },
-  getVenueId:function(str){
-    // console.log(("" + str).substr(0, 3))
-    // console.log(("" + str).substr(4))
-    var name = ("" + str).substr(0, 3)
-    var time = ("" + str).substr(4)
-    const db = wx.cloud.database()
-    db.collection('venue').where({
-      venue_name: name,
-      venue_time: time,
-    }).get({
-      success: res => {
-        var data = res.data[0]
-        // console.log(res)
-        this.setData({
-          venue_id: data._id, 
-        })
-      },
-      fail: err => {
-        wx.showToast({
-          icon: 'none',
-          title: '查询记录失败'
-        })
-        console.error('[数据库] [查询记录] 失败：', err)
-      }
-    })
 
-  },
-  getStrTime:function(str){
-    // console.log(("" + str).substr(0, 10))
-    this.setData({
-      date:("" + str).substr(0, 10),
-    })
-  },
   sure:function() {
-    // console.log(this.data.yyTime)
-    // console.log(this.data.chooseHour)
-
-    this.getVenueId(this.data.chooseHour)
-    this.getStrTime(this.data.yyTime)
-    console.log(this.data.venue_id)
-        wx.navigateTo({
-        url: '../appoint/appoint?date='+this.data.date+'&venue_id='+this.data.venue_id
+    if (this.data.isclick){
+      wx.navigateTo({
+        url: '../appoint/appoint'
       })
+    }else{
+      wx.showToast({
+        title: '请先选择预约时间',
+        icon: 'none',
+        duration: 2000
+      })
+    }
   },
 
-  
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    isclick: false,
+    //日期
+    timeList: [],
+    //可预约天数
+    yyDay: 7,
+    //预约时间段
+    hourList: [
+    { hour: "尚雅楼 10:00-14:00", n: 1, isShow: true },
+    { hour: "尚雅楼 16:00-20:00", n: 2, isShow: true },
+    { hour: "致远楼 10:00-14:00", n: 3, isShow: true },
+    { hour: "致远楼 16:00-20:00", n: 4, isShow: true }
+    ],
+    //是否显示
+    timeShow: false,
+    currentTab: 0,
+    //选择时间
+    chooseHour: "",
+    //选择日期
+    chooseTime: "",
+    hourIndex: -1,
+    //预约时间
+    yyTime: ''
+  },
   //日期选择
   timeClick: function (e) {
-    //非今天-不判断超过当前时间点(所有时间点都可选择)
-    if (e.currentTarget.dataset.index != 0) {
-      var list = this.data.hourList;
-      for (var i = 0; i < list.length; i++) {
-        list[i].isShow = true;
-      }
-      this.setData({
-        hourList: list
-      })
-    } else {
-      //今天-过时不可预约
-      var hour = new Date().getHours();
-      for (var i = 0; i < this.data.hourList.length; i++) {
-        var list = this.data.hourList;
-        if (this.data.hourList[i].n <= hour) {
-          list[i].isShow = false;
-          this.setData({
-            hourList: list
-          })
-        }
-      }
+    //(所有时间点都可选择)
+    var list = this.data.hourList;
+    for (var i = 0; i < list.length; i++) {
+      list[i].isShow = true;
     }
+    this.setData({
+      hourList: list
+    })
+    
     this.setData({
       currentTab: e.currentTarget.dataset.index,
       chooseTime: this.data.timeList[e.currentTarget.dataset.index].date,
       yyTime: '',
-      chooseHour: "",
+      chooseHour: this.data.timeList[0],
       hourIndex: -1
     });
     console.log(this.data.chooseTime)
   },
+
   // 时间选择
   hourClick: function (e) {
+    this.data.isclick=true;
     var that = this;
     // 时间不可选择
     if (!e.currentTarget.dataset.isshow) {
@@ -181,7 +130,14 @@ Page({
     })
     console.log(chooseTime)
   },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
   onLoad: function (options) {
+    /**
+      * 时间对象的格式化;
+    */
     Date.prototype.Format = function (format) {
       var o = {
         "M+": this.getMonth() + 1,  //month
@@ -202,6 +158,10 @@ Page({
       }
       return format;
     }
+
+    /**
+      * 日期的计算;
+    */
     Date.prototype.DateAdd = function (interval, number) {
       number = parseInt(number);
       var date = new Date(this.getTime());
@@ -217,8 +177,6 @@ Page({
       }
       return date;
     }
-
-
 
     var dateList = [];
     var now = new Date();
@@ -239,19 +197,10 @@ Page({
     this.setData({
       timeList: dateList
     });
-    //初始化判断
-    //当前时间
-    var hour = new Date().getHours();
 
-    for (var i = 0; i < this.data.hourList.length; i++) {
-      var list = this.data.hourList;
-      //过时不可选
-      if (this.data.hourList[i].n <= hour) {
-        list[i].isShow = false;
-        this.setData({
-          hourList: list
-        })
-      }
-    }
+    //初始化当前日期
+    this.setData({
+      chooseTime: this.data.timeList[0].date,
+    });
   }
 })

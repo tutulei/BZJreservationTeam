@@ -1,69 +1,50 @@
 <!--pages/home/home.wxml-->
 <!-- <text>这里是个人信息\n</text> -->
 <view class='homeusermsg'>
-  <view id="username">{{username}}</view>
   <view id="userstatus">{{userstatus}}</view>
+  <view id="username">{{username}}</view>
 </view>
 
 <view id="announcement">{{announcement}}</view>
 <!-- <text>----------我是分割线----------\n</text> -->
 <!-- <text bindtap="appoint">这里是当前预约信息（可点击查看）\n</text> -->
-<view bindtap="appoint">
-  <text>当前预约</text>
-  
-  <view class="container list-container">
-    <view class="list-item" wx:for="{{contactList}}">
-      <image class="left" src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/img2.jpg"></image>
-      <view class="right">
-        <view class="title">
-          <view class="name">{{item.name}}</view>
-          <view class="phone">{{item.phone}}</view>
-        </view>
-        <view class="time">{{item.time}}</view>
-      </view>
-    </view>
-  </view> 
-
+<text class="title">当前预约</text>
+<!-- <view bindtap="appoint">
   <view id="rsstatus">{{rsstatus}}</view>
   <view class="venuename">{{venuename}}</view>
-  <view>{{date}}</view>
-  <view>{{time}}</view>
+</view> -->
+
+<view class="container list-container" bindtap="appoint">
+  <view class="list-item" wx:for="{{contactList}}">
+    <image class="left" src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/img2.jpg"></image>
+    <view class="right">
+      <view class="title1">
+        <view class="name">{{item.name}}</view>
+        <view class="phone">{{item.phone}}</view>
+      </view>
+      <view class="time">{{item.time}}</view>
+    </view>
+  </view>
 </view>
 
-<text>这里是历史预约信息\n</text>
-<view class="container list-container">
-    <view class="list-item" wx:for="{{contactList}}">
-      <image class="left" src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/img2.jpg"></image>
-      <view class="right">
-        <view class="title">
-          <view class="name">{{item.name}}</view>
-          <view class="phone">{{item.phone}}</view>
-        </view>
-        <view class="time">{{item.time}}</view>
-      </view>
-    </view>
-  </view> 
-
+<text class="title">历史预约\n</text>
 <!-- <view class="container"> -->
 <view class="row">
-<view class="column">
-  <image bindtap="button1" class="img" src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/index.png" mode="widthFix"></image>
-  <text class="text">首页</text>
-</view>
-<view class="column">
-  <image bindtap="button2" class="img" src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/adduser.png" mode="widthFix"></image>
-  <text class="text">加入</text>
-</view>
-<view class="column">
-  <image bindtap="button3" class="img" src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/add.png" mode="widthFix"></image>
-  <text class="text">预约</text>
-</view>
-<view class="column">
-  <image bindtap="button4" class="img" src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/user.png" mode="widthFix"></image>
-  <text class="text">我的</text>
-</view>
+  <view class="column">
+    <image bindtap="button1" class="img" src="{{url1}}"  mode="widthFix"></image>
+    <text class="text">首页</text>
+  </view>
+  <view class="column">
+    <image bindtap="button2" class="img" src="{{url2}}"  mode="widthFix"></image>
+    <text class="text">加入</text>
+  </view>
+  <view class="column">
+    <image bindtap="button3" class="img" src="{{url3}}"  mode="widthFix"></image>
+    <text class="text">预约</text>
+  </view>
+  <view class="column">
+    <image bindtap="button4" class="img" src="{{url4}}" mode="widthFix"></image>
+    <text class="text">我的</text>
+  </view>
 </view>
 <!-- </view> -->
-
-
-

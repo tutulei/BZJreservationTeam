@@ -9,6 +9,10 @@ page{font-size: 11pt}
   color: white;
 }
 
+.btn-hover{
+  background-color: #1981ad;
+}
+
 /* 是否显示 */
 .modal_show {
     display: block;
