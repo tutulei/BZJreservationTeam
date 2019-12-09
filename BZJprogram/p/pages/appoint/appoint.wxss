@@ -67,3 +67,7 @@
   color:white;
   /* position: fixed; */
 }
+
+.btn-hover{
+  background-color: #1981ad;
+}

@@ -3,8 +3,8 @@
 <view class='modal_container'>
   <!-- 头部显示 -->
   <view class='modal_header'>
-    <view>预定时间</view>
-    <view class='header_tip'>{{yyDay}}天内的预订</view>
+    <view>预约时间</view>
+    <view class='header_tip'>{{yyDay}}天内的预约</view>
   </view>
   <!-- 日期 -->
   <view class="time">
@@ -22,5 +22,5 @@
 </view>
 
 <view>
-  <button class='btn' bindtap='sure'>我要预约</button>
+  <button class='btn' hover-class="btn-hover" bindtap='sure'>我要预约</button>
 </view>

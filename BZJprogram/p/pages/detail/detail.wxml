@@ -3,6 +3,7 @@
 <text>这里是成员信息\n</text>
 
 <label id = "code" hidden="{{!isleader}}">{{"邀请码："+code}}</label>
+<!-- <button class="button" bindtap="submit" hidden="{{!isleader}}">提交申请</button> -->
 <button class="button" bindtap="kick" hidden="{{!isleader}}">踢出成员</button>
 <button class="button" bindtap="exit" wx:if="{{isleader}}">取消预约</button>
 <button class="button" bindtap="exit" wx:else>退出活动</button>

@@ -20,19 +20,15 @@ Page({
     venuename:"",
 
     contactList: [{
-      "name": "张三",
-      "phone": "13588897356",
-      "time": "2019-11-14"
-    }, {
-      "name": "张三",
-      "phone": "13588897356",
-      "time": "2017-11-13"
-    }, {
-      "name": "张三",
-      "phone": "13588897356",
-      "time": "2017-11-10"
-    }]
+      "name": "尚雅楼 10:00-14:00",
+      "phone": "2019-12-11",
+      "time": "待审核"
+    }],
 
+    url1: "cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/ihome.png",
+    url2: "cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/adduser.png",
+    url3: "cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/add.png",
+    url4: "cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/user.png"
   },
 
   /**
@@ -41,7 +37,6 @@ Page({
   onLoad: function (options) {
     this.getUsermsg();
     this.getAnnouncement();
-
   },
 
   /**

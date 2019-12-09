@@ -21,7 +21,7 @@
   <scroll-view scroll-y="true" style="height: 700rpx;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll">
     <view id="container" style="display:block;">
       <view class='item'>
-        <view>{{name+"毕至居"}}</view>
+        <text>尚雅楼毕至居</text>
       </view>
       <view class='item'>
         <view class='left'>场次：A场 10:00-14:00 B场 16:00-20:00</view>
@@ -68,5 +68,5 @@
     </view>
   </scroll-view>
 
-  <button class="button" bindtap="submit">提交预约</button>
+  <button class="button" hover-class="btn-hover" bindtap="submit">提交预约</button>
 </view>
