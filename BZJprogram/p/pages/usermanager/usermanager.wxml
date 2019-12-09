@@ -1,0 +1,6 @@
+<!--pages/user/user.wxml-->
+<input name="input" placeholder="请输入需查询的用户信息" />
+<button bindtap="search">搜索</button>
+<text>这里是用户信息\n</text>
+<button bindtap="phone">联系用户</button>
+<button bindtap="tag">记为违规</button>
