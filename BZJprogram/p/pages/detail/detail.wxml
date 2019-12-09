@@ -1,31 +1,38 @@
 <!--pages/detail/detail.wxml-->
 <!-- <text>这里是预约信息\n</text> -->
-<view>
-  <view id = "venuename">{{"预约场地名称："+venuename}}</view>
-  <view id = "reserstatus">{{"预约状态："+reserstatus}}</view>
-  <view id = "venueaddr">{{"场地地址："+venueaddr}}</view>
-  <view id = "venuetime">{{"预约场次："+veneutime}}</view>
-  <view id = "username">{{"申请人姓名："+leadername}}</view>
-  <view id = "venuedes">{{"场地描述："+venuedes}}</view>
-  <view id = "reserdate">{{"活动日期："+reserdate}}</view>
-  <view id = "reserfrom">{{"预约组织："+reserfrom}}</view>
-  <view id = "resermenbercount">{{"参与人数："+resermenbercount}}</view>
-  <view id = "reserphone">{{"预留手机号："+reserphone}}</view>
-  <view id = "reserreason">{{"申请原因："+reserreason}}</view>
-  <view id = "tools" hidden="{{!havetools}}">{{"所需工具："+tools}}</view>
-</view>
+<view id="contain">
+  <text class="title1">场地信息</text>
+  <view class="text" id="reserstatus">{{"预约状态："+reserstatus}}</view>
+  <view class="text" id="venuename">{{"预约场地："+venuename}}</view>
+  <view class="text" id="reserdate">{{"活动日期："+reserdate}}</view>
+  <view class="text" id="venuetime">{{"预约场次："+veneutime}}</view>
+  <view class="text" id="venuedes">{{"场地描述："+venuedes}}</view>
 
-<view class = "menberlable">
+  <text class="title">申请人信息</text>
+  <view class="text" id="username">{{"申请人姓名："+leadername}}</view>
+  <view class="text" id="reserphone">{{"预留手机号："+reserphone}}</view>
+  <view class="text" hidden="{{!isleader}}">
+    <!-- {{"邀请码："+code}} -->
+    <text>邀请码：</text>
+    <text id="code">{{code}}</text>
+  </view>
+
+  <text class="title">活动信息</text>
+  <view class="text" id="reserfrom">{{"预约组织："+reserfrom}}</view>
+  <view class="text" id="resermenbercount">{{"参与人数："+resermenbercount}}</view>
+  <view class="text" id="reserreason">{{"申请原因："+reserreason}}</view>
+  <view class="text" id="tools" hidden="{{!havetools}}">{{"所需工具："+tools}}</view>
+
+  <text class="title">成员信息</text>
   <view class="list-item" wx:for="{{menberslist}}">
-      <view class="name">{{item.name}}</view>
-      <view class="no">{{item.no}}</view>
+    <text class="name">{{item.name}} </text>
+    <text class="no">{{item.no}}</text>
+  </view>
+  <!-- <button class="button" bindtap="submit" hidden="{{!isleader}}">提交申请</button> -->
+
+  <view class="btn-area">
+    <button class="button1" bindtap="kick" hidden="{{!isleader}}">踢出成员</button>
+    <button class="button2" bindtap="exit" wx:if="{{isleader}}">取消预约</button>
+    <button class="button2" bindtap="exit" hidden="{{!isleader}}" wx:else>退出活动</button>
   </view>
 </view>
-
-
-
-<label id = "code" hidden="{{!isleader}}">{{"邀请码："+code}}</label>
-<!-- <button class="button" bindtap="submit" hidden="{{!isleader}}">提交申请</button> -->
-<button class="button" bindtap="kick" hidden="{{!isleader}}">踢出成员</button>
-<button class="button" bindtap="exit" wx:if="{{isleader}}">取消预约</button>
-<button class="button" bindtap="exit" wx:else>退出活动</button>

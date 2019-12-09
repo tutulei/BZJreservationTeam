@@ -55,7 +55,7 @@ App({
     })
   },
   globalData: {
-    STATUS_RESER_WP: "待提交",
+    STATUS_RESER_WP: "邀请中",
     STATUS_RESER_WA: "审核中",
     STATUS_RESER_OK: "已过审",
     STATUS_RESER_FN: "已结束",

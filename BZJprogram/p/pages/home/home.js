@@ -9,7 +9,7 @@ Page({
   data: {
     username:"请去“我的”完善个人信息",
     userstatus: app.globalData.STATUS_USER_TR,
-    userno:"121212",
+    userno:"2333",
 
     announcement:"",
 
@@ -17,13 +17,10 @@ Page({
     rsstatus:"",
     rsdate: null,
     venuename:"",
+    venuetime:"",
     venue_id:"",
-    contactList: [{
-      "name": "尚雅楼 10:00-14:00",
-      "phone": "2019-12-11",
-      "time": "待审核"
-    }],
-
+    nowList:[],
+    historyList: [],
     url1: "cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/ihome.png",
     url2: "cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/adduser.png",
     url3: "cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/add.png",
@@ -36,6 +33,7 @@ Page({
   onLoad: function (options) {
     this.getUsermsg();
     this.getAnnouncement();
+    
   },
 
   /**
@@ -93,6 +91,14 @@ Page({
     })
   },
 
+  appoint2: function (event) {
+    // console.log(event)
+    var i = event.currentTarget.dataset.index
+    console.log("sadasd"+i)
+    wx.navigateTo({
+      url: '../detail/detail?reser_id=' + this.data.historyList[i].reserid + "&venue_id=" + this.data.historyList[i].venueid
+    })
+  },
   button1: function () {
     wx.navigateTo({
       url: '../home/home'
@@ -149,6 +155,7 @@ Page({
         })
         app.globalData.hasuser = true
         this.getNowReservation();
+        this.setHistoryReservation();
       },
       fail: err => {
         wx.showToast({
@@ -222,7 +229,10 @@ Page({
         var data = res.data[0]
         this.setData({
           venuename: data.venue_name,
+          venuetime:data.venue_time,
         })
+      this.setNowReservation();
+
       },
       fail: err => {
         wx.showToast({
@@ -232,6 +242,83 @@ Page({
         console.error('[数据库] [查询记录] 失败：', err)
       }
     })
-  }
+  },
+  setNowReservation:function(){
+    var jstr = {}
+    jstr.name = this.data.venuename+" "+this.data.venuetime
+    jstr.date = this.data.rsstatus
+    jstr.status = this.data.rsstatus
+    this.setData({
+      nowList: [jstr],
+    })
+  },
+  setHistoryReservation:function(){
+    const db = wx.cloud.database()
+    const _ = db.command
+    // console.log(this.data.userno)
+    db.collection('reservation').where({
+      user_no: this.data.userno,
+      reservation_status: _.or(_.eq(app.globalData.STATUS_RESER_FN), _.eq(app.globalData.STATUS_RESER_FD)),
+    }).get({
+      success: res => {
+        // console.log('[数据库] [查询记录] 成功: ', res.data[0])
+        var data = res.data
+        // console.log(data)
+        var list = []
+        for(var i =0;i<data.length;i++){
+          var jstr = {}
+          jstr.reserid = data[i]._id
+          jstr.reserdate = data[i].reservation_date
+          jstr.status = data[i].reservation_status
+          jstr.venueid = data[i].venue_id
+          jstr.venuename = ""
+          jstr.venuetime = ""
+          console.log(i)
+          list.push(jstr)
+          this.setData({
+            historyList: list,
+          })
+          // console.log(this.data.historyList)
+          this.setHistoryVenue(i,data[i].venue_id)
+
+        }
+
+        
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.error('[数据库] [查询记录] 失败：', err)
+      }
+    })
+  },
+  setHistoryVenue:function(i,id){
+    const db = wx.cloud.database()
+    db.collection('venue').where({
+      _id: id,
+    }).get({
+      success: res => {
+        // console.log('[数据库] [查询记录] 成功: ', res.data[0])
+        console.log(res.data)
+        var data = res.data[0]
+        var list = this.data.historyList
+        list[i].venuename = data.venue_name
+        list[i].venuetime = data.venue_time
+        this.setData({
+          historyList:list,
+        })
+        // console.log(this.data.historyList)
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.error('[数据库] [查询记录] 失败：', err)
+      }
+    })
+  },
 
 })

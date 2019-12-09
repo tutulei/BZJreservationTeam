@@ -17,6 +17,7 @@ Page({
         checked: 'true'
       },
     ],
+    venuemaxpernum:0,
     venueid: "",
     venuename: "",
     session: "",
@@ -150,34 +151,54 @@ Page({
 
 
   formSubmit: function(e) {
-    console.log('form发生了submit事件，携带数据为：', e.detail.value),
-      wx.showModal({
-        title: '提示',
-        content: '请确认提交申请表',
-        success: res => {
-          if (res.confirm) {
-            console.log('用户点击确定')
-            wx.showToast({
-              title: '保存成功',
-              icon: 'success',
-              duration: 2000
-            });
-            this.saveReserMsg();
-            var pages = getCurrentPages();
-            var prevPage = pages[pages.length - 2];
-            prevPage.setData({
-              iswrite: true,
-              list:this.data.list
-
-            });
-            wx.navigateBack({
-              delta: 1,
-            });
-          } else if (res.cancel) {
-            console.log('用户点击取消')
+    if (parseInt(this.data.pernumber) > this.data.venuemaxpernum){
+      wx.showToast({
+        title: '(。﹏。*)场地只能容纳' + this.data.venuemaxpernum +'人呢',
+        icon: 'none',
+        duration: 3000
+      });
+    } else if (parseInt(this.data.pernumber) < 4) {
+      wx.showToast({
+        title: '小伙伴还不够呢，最少要有4个人才能驾驭得了本厨房呢！',
+        icon: 'none',
+        duration: 3000
+      });
+    } else if (this.data.phone === "" || this.data.appsector === "" || this.data.pernumber === "" || this.data.appreason === "" || (this.data.toolsmsg === "" && this.data.hastools===true) ){
+      wx.showToast({
+        title: '请先完整填写信息哦~',
+        icon: 'none',
+        duration: 2000
+      });
+    }else{
+      console.log('form发生了submit事件，携带数据为：', e.detail.value),
+        wx.showModal({
+          title: '提示',
+          content: '提交前多确认下信息哦，乱填可是会被驳回哒，还可能会被关进小黑屋！',
+          success: res => {
+            if (res.confirm) {
+              console.log('用户点击确定')
+              wx.showToast({
+                title: '保存成功',
+                icon: 'success',
+                duration: 2000
+              });
+              this.saveReserMsg();
+              var pages = getCurrentPages();
+              var prevPage = pages[pages.length - 2];
+              prevPage.setData({
+                iswrite: true,
+                list: this.data.list
+              });
+              wx.navigateBack({
+                delta: 1,
+              });
+            } else if (res.cancel) {
+              console.log('用户点击取消')
+            }
           }
-        }
-      })
+        })
+    }
+    
   },
 
   formReset: function() {
@@ -196,7 +217,7 @@ Page({
         reservation_menber: "",
         reservation_menbercount: this.data.pernumber,
         reservation_usetools: this.data.hastools,
-        reservation_status: "待提交",
+        reservation_status: app.globalData.STATUS_RESER_WP,
         venue_id: this.data.venue_id,
         reservation_reason: this.data.appreason,
         reservation_tools: this.data.toolsmsg,
@@ -217,6 +238,7 @@ Page({
         this.setData({
           venuename: data.venue_name,
           session: data.venue_time,
+          venuemaxpernum: data.venue_maxnum
         })
 
       },

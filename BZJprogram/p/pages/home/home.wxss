@@ -46,6 +46,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   padding: 5px 30px;
   width: 25%;
   height: 60px;
@@ -84,7 +85,6 @@ display: flex;
 flex-direction: row;
 padding:20rpx;
 }
-
 .left{
 width: 100rpx;
 height:100rpx;
@@ -110,12 +110,12 @@ font-size: 40rpx;
 color: #000;
 }
 
-.phone{
+.date{
 font-size: 35rpx;
 color:#159de3;
 }
 
-.time{
+.status{
 width: 200rpx;
 color: rgb(219, 64, 64);
 font-size: 30rpx;

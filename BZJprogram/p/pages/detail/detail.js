@@ -31,9 +31,8 @@ Page({
 
     resermenbers:"",
     menberslist: [{
-      name: "李四",
-      no: "31701099"
-    }]
+      name:"无"
+    }],
 
 
 
@@ -119,23 +118,29 @@ Page({
     }).get({
       success: res => {
         // console.log('[数据库] [查询记录] 成功: ', res)
-        this.setData({
-          isleader: res.data[0].user_no == app.globalData.usermsg.user_no? true:false,
-        })
-        if(this.data.isleader){
+        if (res.data[0].reservation_status === app.globalData.STATUS_RESER_FN || res.data[0].reservation_status === app.globalData.STATUS_RESER_FD){
           this.setData({
-            leadername:app.globalData.usermsg.user_name,
+            isleader : false,
           })
         }else{
-          db.collection('user').where({
-            user_no: res.data[0].user_no
-          }).get({
-            success: res => {
-              this.setData({
-                leadername: res.data[0].user_name,
-              })
-            }
+          this.setData({
+            isleader: res.data[0].user_no == app.globalData.usermsg.user_no ? true : false,
           })
+          if (this.data.isleader) {
+            this.setData({
+              leadername: app.globalData.usermsg.user_name,
+            })
+          } else {
+            db.collection('user').where({
+              user_no: res.data[0].user_no
+            }).get({
+              success: res => {
+                this.setData({
+                  leadername: res.data[0].user_name,
+                })
+              }
+            })
+          }
         }
       },
       fail: err => {
