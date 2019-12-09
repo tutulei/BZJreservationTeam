@@ -52,7 +52,7 @@ Page({
   sure:function() {
     if (this.data.isclick){
       wx.navigateTo({
-        url: '../appoint/appoint'
+        url: '../appoint/appoint?date=' + this.data.date + '&venue_id=' + this.data.venue_id
       })
     }else{
       wx.showToast({
@@ -67,6 +67,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    venue_id: "",
+    date: "",
     isclick: false,
     //日期
     timeList: [],
@@ -109,6 +111,7 @@ Page({
       hourIndex: -1
     });
     console.log(this.data.chooseTime)
+    this.getVenueId()
   },
 
   // 时间选择
@@ -129,6 +132,43 @@ Page({
       yyTime: chooseTime
     })
     console.log(chooseTime)
+    this.getVenueId(this.data.chooseHour)
+    this.getStrTime(this.data.yyTime)
+  },
+
+  getVenueId: function (str) {
+    // console.log(("" + str).substr(0, 3))
+    // console.log(("" + str).substr(4))
+    var name = ("" + str).substr(0, 3)
+    var time = ("" + str).substr(4)
+    const db = wx.cloud.database()
+    db.collection('venue').where({
+      venue_name: name,
+      venue_time: time,
+    }).get({
+      success: res => {
+        var data = res.data[0]
+        // console.log(res)
+        this.setData({
+          venue_id: data._id,
+        })
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.error('[数据库] [查询记录] 失败：', err)
+      }
+    })
+
+  },
+
+  getStrTime: function (str) {
+    // console.log(("" + str).substr(0, 10))
+    this.setData({
+      date: ("" + str).substr(0, 10),
+    })
   },
 
   /**
@@ -202,5 +242,6 @@ Page({
     this.setData({
       chooseTime: this.data.timeList[0].date,
     });
+    this.getVenueId()
   }
 })
