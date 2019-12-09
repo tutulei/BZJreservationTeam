@@ -46,7 +46,10 @@ Page({
     this.setData({
       reser_id:options.reser_id,
       venue_id:options.venue_id,
-      isleader:this.isLeader()
+      
+    })
+    this.setData({
+      isleader:this.isLeader(),
     })
     this.setresermsg()
     this.setvenuemsg()
