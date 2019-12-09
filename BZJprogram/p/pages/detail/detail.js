@@ -236,7 +236,7 @@ Page({
         // console.log('[数据库] [查询记录] 成功: ', res.data[0].msg)
         this.setData({
           reserstatus: res.data[0].reservation_status,
-          reserdate: res.data[0].reservation_status,
+          reserdate: res.data[0].reservation_date,
           reserfrom: res.data[0].reservation_from,
           resermenbercount: res.data[0].reservation_menbercount,
           reserphone: res.data[0].reservation_phone,

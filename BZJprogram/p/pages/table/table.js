@@ -201,8 +201,7 @@ Page({
         reservation_reason: this.data.appreason,
         reservation_tools: this.data.toolsmsg,
         reservation_from: this.data.appsector,
-      }
-      this.creatInviteCode(res._id)
+      },
     })
     console.log(this.data.list)
   },
