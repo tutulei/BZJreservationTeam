@@ -205,10 +205,6 @@ Page({
     }).then(res => {
       // 插入数据成功
       // console.log(res._id)
-      this.setData({
-        inputhid: true,
-        fixedhid: false,
-      })
       this.creatInviteCode(res._id)
       this.userAddId(res._id)
     }).catch(err => {
@@ -241,10 +237,11 @@ Page({
     })
   },
   userAddId: function(id) {
+
     const db = wx.cloud.database();
     db.collection('user').doc(app.globalData.usermsg._id).update({
       data: {
-        reservation_id: 'id',
+        reservation_id: id,
         user_status: app.globalData.STATUS_USER_HR,
       }
     }).then(res => {

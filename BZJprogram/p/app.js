@@ -70,8 +70,6 @@ App({
     STATUS_VENUE_NO: "未开放",
     STATUS_VENUE_HR: "已预约",
 
-
-
     userInfo: null,
     openid:null,
     hasuser:false,

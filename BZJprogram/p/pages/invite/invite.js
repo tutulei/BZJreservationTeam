@@ -81,16 +81,34 @@ Page({
 
 
   formSubmit: function (e) {
-    if(this.isAdmin()){
-      wx.navigateTo({
-        url: '../admin/admin'
-      })
-    }else{
+    this.isAdmin()
+    if (app.globalData.usermsg.user_status === app.globalData.STATUS_USER_CR){
       this.addReservation()
+    } else if (app.globalData.usermsg.user_status === app.globalData.STATUS_USER_HR){
+      if (app.globalData.usermsg.reservation_id === "") {
+        wx.showToast({
+          title: '(๑•́ ₃ •̀๑)亲亲，等下周再来叭~',
+          icon: 'none',
+          duration: 3000
+        })
+      } else {
+        wx.showToast({
+          title: '(˘•ω•˘)不要贪心哦~你已经加入过一场预约了呢~',
+          icon: 'none',
+          duration: 3000
+        })
+      }
+
+    } else if (app.globalData.usermsg.user_status === app.globalData.STATUS_USER_BL) {
+      wx.showToast({
+        title: '￣へ￣哼哼，让你不遵守规则，在小黑屋好好反省吧！',
+        icon: 'none',
+        duration: 3000
+      })
     }
 
+    //一下方法为加入预约功能，预约表添加成员，成员表添加预约id
 
-    
     // // console.log('form发生了submit事件，携带数据为：', e.detail.value),
     // wx.navigateBack({
     //   delta: 1,
@@ -118,6 +136,9 @@ Page({
           }else{
             is = true
             console.log("hello admin")
+            wx.navigateTo({
+              url: '../admin/admin'
+            })
           }
         },
         fail: err => {
@@ -133,6 +154,7 @@ Page({
   },
   addReservation:function(){
     const db = wx.cloud.database()
+    console.log(this.data.code)
     db.collection('invite').where({
       invite_code: this.data.code,
     }).get({
@@ -145,7 +167,28 @@ Page({
               duration: 1000
             })
           } else {
-            this.addmenber(res.data[0].reservation_id)
+            //弹出预约信息实现，形式不限
+            console.log(res.data[0].reservation_id)
+            var reserid = res.data[0].reservation_id
+            wx.showModal({
+              title: '前方高能',
+              content: '罒ω罒嘿嘿嘿~确定加入这场神秘的活动咩？',
+              success: res => {
+                if (res.confirm) {
+                  console.log('用户点击确定')
+                  wx.showToast({
+                    title: '欢迎新同志！快去主界面康康叭~',
+                    icon: 'none',
+                    duration: 2000
+                  })
+                  //确认后预约表添加成员信息
+                  this.addmenber(reserid)
+                  this.addreserId(reserid)
+                } else if (res.cancel) {
+                  console.log('用户点击取消')
+                }
+              }
+            })
           }
         },
         fail: err => {
@@ -157,7 +200,7 @@ Page({
         }
       })
   },
-  addmenber:function(id){
+  addmenber: function (id) {
     const db = wx.cloud.database();
     var menbers =""
     db.collection('reservation').where({
@@ -165,15 +208,32 @@ Page({
     }).get({
       success: res => {
         menbers = res.data[0].reservation_menber
-      }
-    }).then(res => {
-      // console.log(res)
-      const can = db.collection('reservation').doc(id).update({
-        data: {
-          reservation_menber: menbers === "" ? app.globalData.usermsg.user_no : (menbers + "," + app.globalData.usermsg.user_no)
+        user_no = res.data[0].user_no
+        // console.log("``````" + "menbers:"+menbers)
+        if (user_no !== app.globalData.usermsg.user_no){
+          const can = db.collection('reservation').doc(id).update({
+            data: {
+              reservation_menber: menbers === "" ? app.globalData.usermsg.user_no : (menbers + "," + app.globalData.usermsg.user_no)
+            }
+          })
+        }else{
+          wx.showToast({
+            title: '咳咳咳，自己的活动不用再加入哦~',
+            icon: 'none',
+            duration: 3000
+          })
         }
-      })
+
+      }
     })
 
-  }
+  },
+  addreserId:function(id){
+    const db = wx.cloud.database();
+    db.collection('user').doc(app.globalData.usermsg._id).update({
+      reservation_id : id,
+      user_status: app.globalData.STATUS_USER_HR,
+    })
+    app.globalData.usermsg.reservation_id = id
+  },
 })
