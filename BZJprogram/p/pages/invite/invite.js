@@ -76,6 +76,7 @@ Page({
     this.setData({
       code: e.detail.value,
     })
+    // console.log(e.detail.value+":::"+this.data.code)
   },
 
 

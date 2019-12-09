@@ -8,10 +8,7 @@
     "pages/attention/attention",
     "pages/date/date",
     "pages/invite/invite",
-    "pages/detail/detail",
-    "pages/resermanager/resermanager",
-    "pages/venuemanager/venuemanager",
-    "pages/usermanager/usermanager"
+    "pages/detail/detail"
   ],
   "window": {
     "backgroundTextStyle": "light",

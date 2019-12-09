@@ -28,7 +28,7 @@ Page({
     reserreason: "",
     tools: "",
     havetools: false,
-
+    finish:false,
     resermenbers:"",
     menberslist: [{
       name:"无"
@@ -118,11 +118,6 @@ Page({
     }).get({
       success: res => {
         // console.log('[数据库] [查询记录] 成功: ', res)
-        if (res.data[0].reservation_status === app.globalData.STATUS_RESER_FN || res.data[0].reservation_status === app.globalData.STATUS_RESER_FD){
-          this.setData({
-            isleader : false,
-          })
-        }else{
           this.setData({
             isleader: res.data[0].user_no == app.globalData.usermsg.user_no ? true : false,
           })
@@ -131,6 +126,7 @@ Page({
               leadername: app.globalData.usermsg.user_name,
             })
           } else {
+            console.log()
             db.collection('user').where({
               user_no: res.data[0].user_no
             }).get({
@@ -141,6 +137,15 @@ Page({
               }
             })
           }
+        if (res.data[0].reservation_status === app.globalData.STATUS_RESER_FN || res.data[0].reservation_status === app.globalData.STATUS_RESER_FD) {
+          this.setData({
+            finish: true,
+            isleader:false,
+          })
+        } else {
+          this.setData({
+            finish: true,
+          })
         }
       },
       fail: err => {

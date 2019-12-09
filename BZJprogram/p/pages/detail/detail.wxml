@@ -33,6 +33,6 @@
   <view class="btn-area">
     <button class="button1" bindtap="kick" hidden="{{!isleader}}">踢出成员</button>
     <button class="button2" bindtap="exit" wx:if="{{isleader}}">取消预约</button>
-    <button class="button2" bindtap="exit" hidden="{{!isleader}}" wx:else>退出活动</button>
+    <button class="button2" bindtap="exit" hidden="{{finish}}" wx:else>退出活动</button>
   </view>
 </view>

@@ -20,6 +20,8 @@ Page({
     venuetime:"",
     venue_id:"",
     nowList:[],
+    nownoen:true,
+    hisnone:true,
     historyList: [],
     url1: "cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/ihome.png",
     url2: "cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/adduser.png",
@@ -206,7 +208,7 @@ Page({
           venue_id: data.venue_id,
           rsdate: data.reservation_date,
         })
-        var id = data.venue_id 
+        var id = data.venue_id
         this.getVenueName(id)
       },
       fail: err => {
@@ -245,8 +247,8 @@ Page({
   },
   setNowReservation:function(){
     var jstr = {}
-    jstr.name = this.data.venuename+" "+this.data.venuetime
-    jstr.date = this.data.rsstatus
+    jstr.name = this.data.venuename + " " + this.data.venuetime
+    jstr.date = this.data.rsdate
     jstr.status = this.data.rsstatus
     this.setData({
       nowList: [jstr],
@@ -304,12 +306,22 @@ Page({
         console.log(res.data)
         var data = res.data[0]
         var list = this.data.historyList
-        list[i].venuename = data.venue_name
+        list[i].venuename = data.venue_name + " " + data.venue_time
         list[i].venuetime = data.venue_time
         this.setData({
           historyList:list,
         })
         // console.log(this.data.historyList)
+        if(this.data.nowList.length>0){
+          this.setData({
+            nownoen:false,
+          })
+        }
+        if (this.data.historyList.length > 0) {
+          this.setData({
+            hisnone: false,
+          })
+        }
       },
       fail: err => {
         wx.showToast({

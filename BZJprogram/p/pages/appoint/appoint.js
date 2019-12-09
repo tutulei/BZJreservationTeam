@@ -139,12 +139,12 @@ Page({
         reservation_menber: "",
         reservation_menbercount: this.data.list.reservation_menbercount,
         reservation_usetools: this.data.list.reservation_usetools,
-        reservation_status: "待提交",
+        reservation_status: this.data.list.reservation_status,
         venue_id: this.data.venue_id,
         reservation_reason: this.data.list.reservation_reason,
         reservation_tools: this.data.list.reservation_tools,
         reservation_from: this.data.list.reservation_from,
-        close_time: TIME
+        creat_time: TIME
       }
     }).then(res => {
       // 插入数据成功
