@@ -22,6 +22,7 @@ Page({
     nowList: [],
     nownoen:true,
     hisnone:true,
+    url1:"cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/ihome.png",
     url2: "cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/adduser.png",
     url3: "cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/add.png",
     url4: "cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/user.png"
@@ -257,6 +258,11 @@ Page({
     this.setData({
       nowList: [jstr],
     })
+    if(this.data.nowList.length>0){
+        this.setData({
+            nownoen:false,
+        })
+    }
   },
   setHistoryReservation: function () {
     const db = wx.cloud.database()
@@ -316,11 +322,7 @@ Page({
           historyList: list,
         })
         // console.log(this.data.historyList)
-        if(this.data.nowList.length>0){
-          this.setData({
-            nownoen:false,
-          })
-        }
+
         if (this.data.historyList.length > 0) {
           this.setData({
             hisnone: false,
