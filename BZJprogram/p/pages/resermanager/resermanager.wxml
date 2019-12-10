@@ -1,74 +1,38 @@
 <!--pages/admin/admin.wxml-->
 <view class="avatar-wrapper">
-  <view class='content'>
-      <view class="img">
-        <image src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/person.png"></image>
-      </view>
-
-      <view class='homeusermsg'>
-        <view id="username">{{username}}</view>
-        <view id="userstatus">{{userstatus}}</view>
-      </view>
-    </view>
+  <image src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/person.png"></image>
+  <view id="username">{{username}}</view>
 </view>
-<view id="announcement">{{announcement}}</view>
 <!-- <text>----------我是分割线----------\n</text> -->
-<text bindtap="appoint">这里是待审核预约信息（可点击进行审核）\n</text>
+<text class="title">待审核预约</text>
 
-<view bindtap="uncheck">
+<view >
   <view class="container list-container">
-    <view class="list-item" wx:for="{{contactList}}">
+    <view class="list-item" wx:for="{{contactList}}" bindtap="uncheck">
       <image class="left" src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/img2.jpg"></image>
       <view class="right">
-        <view class="title">
-          <view class="name">{{item.name}}</view>
-          <view class="place">{{item.place}}</view>
-        </view>
-        <view class="title2">
+        <view class="title1">
           <view class="time">{{item.time}}</view>
-          <view class="status">{{item.status}}</view>
+          <view class="date">{{item.date}}</view>
         </view>
+        <view class="status">{{item.status}}</view>
       </view>
     </view>
-  </view> 
 
-  <view id="rsstatus">{{rsstatus}}</view>
-  <view class="venuename">{{venuename}}</view>
+  </view>
 </view>
-
-<text>这里是已审核预约信息\n</text>
-
-<view bindtap="check">
-  <view class="container list-container">
-    <view class="list-item" wx:for="{{contactList2}}">
-      <image class="left" src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/img2.jpg"></image>
-      <view class="right">
-        <view class="title">
-          <view class="name">{{item.name}}</view>
-          <view class="place">{{item.place}}</view>
-        </view>
-        <view class="title2">
-          <view class="time">{{item.time}}</view>
-          <view class="status2">{{item.status}}</view>
-        </view>
-      </view>
-    </view>
-  </view> 
-
-  <view id="rsstatus">{{rsstatus}}</view>
-  <view class="venuename">{{venuename}}</view>
-</view>
-
-<input name="input" placeholder="请输入需查询的预约信息" />
-<button bindtap="search">搜索</button>
 
 <view class="row">
   <view class="column">
-    <image bindtap="button2" class="img" src="../../images/place.png" mode="widthFix"></image>
+    <image bindtap="button1" class="img" src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/ihome2.png" mode="widthFix"></image>
+    <text class="text">首页</text>
+  </view>
+  <view class="column">
+    <image bindtap="button2" class="img" src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/place.png" mode="widthFix"></image>
     <text class="text">管理场次</text>
   </view>
   <view class="column">
-    <image bindtap="button3" class="img" src="../../images/user.png" mode="widthFix"></image>
+    <image bindtap="button3" class="img" src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/user.png" mode="widthFix"></image>
     <text class="text">管理用户</text>
   </view>
 </view>

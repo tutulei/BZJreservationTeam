@@ -1,8 +1,4 @@
-pages/home/home.wxss
-
-.img {
-  width: 50%;
-}
+/* pages/home/home.wxss */
 
 .homeusermsg {
   display: flex;
@@ -34,6 +30,7 @@ pages/home/home.wxss
   bottom: 0px;
   width: 100%;
   background-color: white;
+  /* border-top: 1px solid #ccc; */
 }
 
 .column {
@@ -57,10 +54,15 @@ pages/home/home.wxss
    color: white;
 }
 
-/* pages/home/home.wxss */
-
 .img {
   width: 100%;
+}
+
+.tip{
+  padding: 10px;
+  padding-bottom: 10px;
+  width: 100%;
+  border-bottom: 1px solid #ccc;
 }
 
 .container {

@@ -19,13 +19,13 @@
   <view id="rsstatus">{{rsstatus}}</view>
   <view class="venuename">{{venuename}}</view>
 </view> -->
-<view hidden="{{!nownoen}}" >啥都没有呢，快去创建或者加入一个预约叭~</view>
-<view class="container list-container" bindtap="appoint">
-  <view class="list-item" wx:for="{{nowList}}">
+<view class="tip" hidden="{{!nownoen}}" >啥都没有呢，快去创建或者加入一个预约叭~</view>
+<view class="container list-container">
+  <view class="list-item" wx:for="{{nowList}}" bindtap="appoint">
     <image class="left" src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/img2.jpg"></image>
     <view class="right">
       <view class="title1">
-        <view class="name">{{item.name}}</view>
+        <view class="time">{{item.name}}</view>
         <view class="date">{{item.date}}</view>
       </view>
       <view class="status">{{item.status}}</view>
@@ -34,13 +34,13 @@
 </view>
 
 <text class="title">历史预约\n</text>
-<view hidden="{{!hisnone}}" >空空如也</view>
+<view class="tip" hidden="{{!hisnone}}" >空空如也</view>
 <view class="container list-container"  >
   <view class="list-item" data-index="{{index}}" bindtap="appoint2"  wx:for="{{historyList}}" >
       <image class="left" src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/img2.jpg"></image>
       <view class="right">
         <view class="title1">
-          <view class="name">{{item.venuename}}</view>
+          <view class="time">{{item.venuename}}</view>
           <view class="date">{{item.reserdate}}</view>
         </view>
         <view class="status">{{item.status}}</view>
