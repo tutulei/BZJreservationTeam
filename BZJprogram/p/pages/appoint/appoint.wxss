@@ -1,5 +1,5 @@
 .page{
-   background: #eee;
+   background-color: #eee;
 }
 
 .img{
@@ -46,7 +46,7 @@
 }
 
 .place{
-  padding-left: 160px;
+  padding-left: 185px;
 }
 
 .pay{
@@ -60,7 +60,17 @@
   margin-top: 20px;
 }
 
+.btn-area{
+  /* background-color:  #eee; */
+  align-items: center;
+  width: 100%;
+  height: 80px;
+  position: fixed;
+  bottom: 0;
+}
+
 .button{
+  display: block;
   margin: 20px;
   width: 100%;
   background-color:  #159de3;
