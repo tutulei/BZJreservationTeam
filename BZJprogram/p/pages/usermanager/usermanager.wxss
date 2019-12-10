@@ -1,1 +1,124 @@
 /* pages/user/user.wxss */
+.img{
+  width: 80%
+}
+
+.container{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: content-box;
+}
+
+
+.list-container{
+  padding: 0
+}
+
+.list-container{
+  padding: 0
+}
+ 
+.list-item{
+  background-color:#eeeeee;
+  border: 8rpx solid darkgray;
+  margin: 10px;
+  border: solid 1px;
+  border-radius: 5px;
+  height: 100rpx;
+  display: flex;
+  flex-direction: row;
+  padding:20rpx;
+}
+
+.left{
+  width: 100rpx;
+  height:100rpx;
+}
+ 
+.right{
+  width: 590rpx;
+  height: 100rpx;
+  margin-left: 20rpx;
+  display: flex;
+  flex-direction: row;
+}
+ 
+.title{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 310rpx;
+}
+
+.title2{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 310rpx;
+}
+
+.name{
+  font-size: 40rpx;
+  color: #000;
+}
+ 
+.sno{
+  font-size: 35rpx;
+  color:darkgrey;
+}
+ 
+ 
+.tel{
+  width: 200rpx;
+  color:darkgoldenrod;
+  font-size: 35rpx;
+}
+
+.text2{
+  font-size: 30rpx;
+  color:rgb(219, 64, 64);
+}
+
+.btn {
+  width: 80px;
+  height: 40px;
+  background-color: #eeeeee;
+  color: black;
+  border-radius: 98rpx; 
+  text-align: center; 
+  line-height: 40px;
+}
+
+.avatar-wrapper {
+  background: #e27d08;
+  height: 40px;
+  padding: 10px 0;
+}
+
+
+.avatar-wrapper .content image {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 25px;
+  height: 25px;
+}
+
+.avatar-wrapper .content homeusermsg{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  font-size: 10px;
+
+}
+
+.section{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}

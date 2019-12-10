@@ -1,6 +1,40 @@
 <!--pages/user/user.wxml-->
-<input name="input" placeholder="请输入需查询的用户信息" />
-<button bindtap="search">搜索</button>
-<text>这里是用户信息\n</text>
-<button bindtap="phone">联系用户</button>
-<button bindtap="tag">记为违规</button>
+<view class="avatar-wrapper">
+  <view class='content'>
+      <view class="img">
+        <image src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/person.png"></image>
+      </view>
+
+      <view class='homeusermsg'>
+        <view id="username">{{username}}</view>
+        <view id="userstatus">{{userstatus}}</view>
+      </view>
+    </view>
+</view>
+
+<view bindtap="blacklist">
+  <view class="container list-container">
+    <view class="list-item" wx:for="{{contactList}}" bindtap='btn'>
+      <image class="left" src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/person.png"></image>
+      <view class="right">
+        <view class="title">
+          <view class="name">{{item.name}}</view>
+          <view class="tel">{{item.tel}}</view>
+        </view>
+        <view class="title2">
+          <view class="sno">{{item.sno}}</view>
+          <view class="section">
+            <view class='btn'>状态:</view>
+            <view class="text2">{{status}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view> 
+
+  <view id="rsstatus">{{rsstatus}}</view>
+  <view class="venuename">{{venuename}}</view>
+</view>
+
+
+
