@@ -5,7 +5,7 @@
 </view>
 <!-- <text>----------我是分割线----------\n</text> -->
 <text class="title">待审核预约</text>
-<scroll-view scroll-y="true" style="height: 800rpx;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll">
+<scroll-view scroll-y="true" style="height: 780rpx;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll">
 <view>
   <view class="container list-container">
     <view class="list-item" wx:for="{{contactList}}" bindtap="uncheck">
