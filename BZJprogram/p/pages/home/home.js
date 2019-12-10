@@ -20,6 +20,7 @@ Page({
     venuetime: "",
     venue_id: "",
     nowList: [],
+    historyList:[],
     nownoen:true,
     hisnone:true,
     url1:"cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/ihome.png",

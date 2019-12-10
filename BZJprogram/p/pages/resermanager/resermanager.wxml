@@ -5,8 +5,8 @@
 </view>
 <!-- <text>----------我是分割线----------\n</text> -->
 <text class="title">待审核预约</text>
-
-<view >
+<scroll-view scroll-y="true" style="height: 800rpx;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll">
+<view>
   <view class="container list-container">
     <view class="list-item" wx:for="{{contactList}}" bindtap="uncheck">
       <image class="left" src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/img2.jpg"></image>
@@ -18,9 +18,9 @@
         <view class="status">{{item.status}}</view>
       </view>
     </view>
-
   </view>
 </view>
+</scroll-view>
 
 <view class="row">
   <view class="column">

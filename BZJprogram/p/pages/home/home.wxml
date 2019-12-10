@@ -6,10 +6,10 @@
 </view>
 
 <view class='notice-wrap' hidden='{{hideNotice}}'>
-<view class="notice">
-<text class="notice-text">{{announcement}}</text>
-</view>
-<view bindtap='switchNotice' class="closeView">x</view>
+  <view class="notice">
+    <text class="notice-text">{{announcement}}</text>
+  </view>
+  <view bindtap='switchNotice' class="closeView">x</view>
 </view>
 
 <!-- <text>----------我是分割线----------\n</text> -->
@@ -19,7 +19,7 @@
   <view id="rsstatus">{{rsstatus}}</view>
   <view class="venuename">{{venuename}}</view>
 </view> -->
-<view class="tip" hidden="{{!nownoen}}" >啥都没有呢，快去创建或者加入一个预约叭~</view>
+<view class="tip" hidden="{{!nownoen}}">啥都没有呢，快去创建或者加入一个预约叭~</view>
 <view class="container list-container">
   <view class="list-item" wx:for="{{nowList}}" bindtap="appoint">
     <image class="left" src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/img2.jpg"></image>
@@ -34,9 +34,10 @@
 </view>
 
 <text class="title">历史预约\n</text>
-<view class="tip" hidden="{{!hisnone}}" >空空如也</view>
-<view class="container list-container"  >
-  <view class="list-item" data-index="{{index}}" bindtap="appoint2"  wx:for="{{historyList}}" >
+<view class="tip" hidden="{{!hisnone}}">空空如也</view>
+<scroll-view scroll-y="true" style="height: 320rpx;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll">
+  <view class="container list-container">
+    <view class="list-item" data-index="{{index}}" bindtap="appoint2" wx:for="{{historyList}}">
       <image class="left" src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/img2.jpg"></image>
       <view class="right">
         <view class="title1">
@@ -44,27 +45,28 @@
           <view class="date">{{item.reserdate}}</view>
         </view>
         <view class="status">{{item.status}}</view>
-      <!-- </view> -->
+        <!-- </view> -->
       </view>
+    </view>
   </view>
-</view>
-<!-- <view class="container"> -->
-<view class="row">
-  <view class="column">
-    <image bindtap="button1" class="img" src="{{url1}}"  mode="widthFix"></image>
-    <text class="text">首页</text>
+</scroll-view>
+  <!-- <view class="container"> -->
+  <view class="row">
+    <view class="column">
+      <image bindtap="button1" class="img" src="{{url1}}" mode="widthFix"></image>
+      <text class="text">首页</text>
+    </view>
+    <view class="column">
+      <image bindtap="button2" class="img" src="{{url2}}" mode="widthFix"></image>
+      <text class="text">加入</text>
+    </view>
+    <view class="column">
+      <image bindtap="button3" class="img" src="{{url3}}" mode="widthFix"></image>
+      <text class="text">预约</text>
+    </view>
+    <view class="column">
+      <image bindtap="button4" class="img" src="{{url4}}" mode="widthFix"></image>
+      <text class="text">我的</text>
+    </view>
   </view>
-  <view class="column">
-    <image bindtap="button2" class="img" src="{{url2}}"  mode="widthFix"></image>
-    <text class="text">加入</text>
-  </view>
-  <view class="column">
-    <image bindtap="button3" class="img" src="{{url3}}"  mode="widthFix"></image>
-    <text class="text">预约</text>
-  </view>
-  <view class="column">
-    <image bindtap="button4" class="img" src="{{url4}}" mode="widthFix"></image>
-    <text class="text">我的</text>
-  </view>
-</view>
-<!-- </view> -->
+  <!-- </view> -->
