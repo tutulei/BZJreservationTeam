@@ -20,6 +20,7 @@ Page({
     venuetime: "",
     venue_id: "",
     nowList: [],
+    historyList:[],
     nownoen:true,
     hisnone:true,
     url1:"cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/ihome.png",
@@ -48,6 +49,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.getUsermsg();
+    this.getAnnouncement();
 
   },
 
@@ -69,7 +72,6 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
   },
 
   /**
@@ -107,9 +109,10 @@ Page({
     })
   },
   button1: function () {
-    wx.navigateTo({
-      url: '../home/home'
-    })
+    // wx.navigateTo({
+    //   url: '../home/home'
+    // })
+    this.onLoad()
   },
 
   button2: function () {
@@ -153,13 +156,14 @@ Page({
     }).get({
       success: res => {
         var data = res.data[0]
-        // console.log('[数据库] [查询记录] 成功: ', res.data[0])
+        console.log('[数据库] [查询记录] 成功: ', res.data[0])
         app.globalData.usermsg = data
         this.setData({
           username: data.user_name,
           userstatus: data.user_status,
           userno: data.user_no
         })
+        console.log(this.data.userstatus)
         app.globalData.hasuser = true
         this.getNowReservation();
         this.setHistoryReservation();
@@ -198,23 +202,36 @@ Page({
   getNowReservation: function () {
     const db = wx.cloud.database()
     const _ = db.command
-
     // console.log(this.data.userno)
     db.collection('reservation').where({
-      user_no: this.data.userno,
+      _id: app.globalData.usermsg.reservation_id,
       reservation_status: _.or(_.eq(app.globalData.STATUS_RESER_WA), _.eq(app.globalData.STATUS_RESER_WP), _.eq(app.globalData.STATUS_RESER_OK)),
     }).get({
       success: res => {
         // console.log('[数据库] [查询记录] 成功: ', res.data[0])
         var data = res.data[0]
-        this.setData({
-          rsid: data._id,
-          rsstatus: data.reservation_status,
-          venue_id: data.venue_id,
-          rsdate: data.reservation_date,
-        })
-        var id = data.venue_id
-        this.getVenueName(id)
+        if(data===undefined){
+          this.setData({
+            venuename: "",
+            venuetime: "",
+            rsid: "",
+            rsstatus: "",
+            venue_id: "",
+            rsdate: "",
+            nowList:[],
+            nownoen:true,
+          })
+        }else{
+          this.setData({
+            rsid: data._id,
+            rsstatus: data.reservation_status,
+            venue_id: data.venue_id,
+            rsdate: data.reservation_date,
+          })
+          var id = data.venue_id
+          this.getVenueName(id)
+        }
+
       },
       fail: err => {
         wx.showToast({
@@ -285,7 +302,6 @@ Page({
           jstr.venueid = data[i].venue_id
           jstr.venuename = ""
           jstr.venuetime = ""
-          console.log(i)
           list.push(jstr)
           this.setData({
             historyList: list,
@@ -313,7 +329,6 @@ Page({
     }).get({
       success: res => {
         // console.log('[数据库] [查询记录] 成功: ', res.data[0])
-        console.log(res.data)
         var data = res.data[0]
         var list = this.data.historyList
         list[i].venuename = data.venue_name + " " + data.venue_time

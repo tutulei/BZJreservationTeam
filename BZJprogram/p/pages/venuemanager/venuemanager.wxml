@@ -1,46 +1,47 @@
 <!--pages/place/place.wxml-->
 <form bindsubmit="formSubmit" bindreset="formReset">
 
-<text>管理场地信息</text>
-
-<view class="section">
-<view class="section__title">场地</view>
-    <picker bindchange="bindAddressChange" value="{{addr_index}}" range="{{venueaddr}}">
-      <view class="picker">
-      当前选择：{{venueaddr[addr_index]}}
+<view class="avatar-wrapper">
+  <view class='content'>
+      <view class="img">
+        <image src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/person.png"></image>
       </view>
-</picker>
-</view>
 
-<view class="section">
-<view class="section__title">时间段</view>
-    <picker bindchange="bindTimeChange" value="{{time_index}}" range="{{venuetime}}">
-      <view class="picker">
-      当前选择：{{venuetime[time_index]}}
+      <view class='homeusermsg'>
+        <view id="username">{{username}}</view>
+        <view id="userstatus">{{userstatus}}</view>
       </view>
-</picker>
+    </view>
 </view>
+<view class = "sec">
+  <view class="section">
+    <text class="text">请选择毕至居地点:</text>
+    <view class="text2">{{yyPlace}}</view>
+    <view class='btn' bindtap='btn'>地点</view>
+  </view>
 
-<view class="section">
-<view class="section__title">日期</view>
-    <picker mode="date" value="{{date}}" start="{{TIME}}" end="2099-11-26" bindchange="bindDateChange">
-        <view class="picker">
-        当前选择: {{date}}
-        </view>
-    </picker>
+  <view class="section">
+    <text class="text">请选择日期:</text>
+     <view class="text2">{{yyDate}}</view> 
+      <picker mode="date" value="{{date}}" start="1978-01-01" end="2030-01-01" bindchange="bindDateChange">  
+        <view class="picker">  
+          日期{{dates}}  
+        </view>  
+      </picker> 
+  </view>
+
+  <view class="section">
+    <text class="text">请选择时间段:</text>
+    <view class="text2">{{yyTime}}</view>
+    <view class='btn' bindtap='btn2'>时间段</view>
+  </view>
+
+  <view class="section">
+    <text class="text">请设定状态:</text>
+    <view class="text2">{{yyStatus}}</view>
+    <view class='btn' bindtap='btn3'>状态</view>
+  </view>
 </view>
-
-<view class="section">
-<view class="section__title">状态</view> 
-    <picker bindchange="bindStatusChange" value="{{stat_index}}" range="{{venuestat}}">
-        <view class="picker">
-        当前选择：{{venuestat[stat_index]}}
-        </view>
-    </picker>
-</view>
-
 </form>
 
-<view>
-  <button class='btn' hover-class="btn-hover" bindtap='sure'>修改场地状态</button>
-</view>
+<button class="button" bindtap="submit">提交</button>

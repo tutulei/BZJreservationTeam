@@ -208,14 +208,11 @@ Page({
     }).get({
       success: res => {
         menbers = res.data[0].reservation_menber
-        user_no = res.data[0].user_no
+        var user_no = res.data[0].user_no
         // console.log("``````" + "menbers:"+menbers)
         if (user_no !== app.globalData.usermsg.user_no){
-          const can = db.collection('reservation').doc(id).update({
-            data: {
-              reservation_menber: menbers === "" ? app.globalData.usermsg.user_no : (menbers + "," + app.globalData.usermsg.user_no)
-            }
-          })
+          var newmenbers = (menbers === "") ? app.globalData.usermsg.user_no : (menbers + "," + app.globalData.usermsg.user_no)
+          this.updateMenbers(id, newmenbers)
         }else{
           wx.showToast({
             title: '咳咳咳，自己的活动不用再加入哦~',
@@ -228,12 +225,32 @@ Page({
     })
 
   },
+  updateMenbers: function (id, newmenbers){
+    // console.log("````" + newmenbers + "id:" + id)
+    wx.cloud.callFunction({
+      name: 'modifyDatabase',
+      data:{
+        name:'reservation',
+        id: id,
+        data:{
+          reservation_menber:newmenbers,
+        },
+      },
+      complete: res => {
+        console.log(res)
+      },
+    })
+  },
   addreserId:function(id){
+    console.log(id)
     const db = wx.cloud.database();
     db.collection('user').doc(app.globalData.usermsg._id).update({
-      reservation_id : id,
-      user_status: app.globalData.STATUS_USER_HR,
-    })
+      data:{
+        reservation_id: id,
+        user_status: app.globalData.STATUS_USER_HR,
+      }
+    }),
+
     app.globalData.usermsg.reservation_id = id
   },
 })

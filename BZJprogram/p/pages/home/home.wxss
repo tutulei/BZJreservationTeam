@@ -7,7 +7,7 @@ pages/home/home.wxss
 .homeusermsg {
   display: flex;
   flex-direction: row;
-  background-color: #e27d08c9;
+  background-color: #e27d08;
   color: white;
   padding-top: 10px;
   padding-bottom: 10px;

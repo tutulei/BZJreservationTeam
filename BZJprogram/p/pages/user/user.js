@@ -186,6 +186,7 @@ Page({
         user_sex: this.data.sex === "男" ? false : true,
         user_address: this.data.addr,
         user_status: app.globalData.STATUS_USER_CR,
+        reservation_id:"",
       }
     }).then(res => {
       // 插入数据成功
