@@ -5,29 +5,40 @@ Page({
    * 页面的初始数据
    */
   data: {
+    username: "管理员，你好！",
     contactList: [{
-      "name": "尚雅毕至居",
-      "time": "2019-11-14",
-      "place": "14:00-16:00",
-      "status": "待审核"
+      "time": "尚雅楼 16:00-20:00",
+      "date": "2019-11-14",
+      "status": "待审核",
     }, {
-      "name": "致远毕至居",
-      "time": "2019-11-15",
-      "place": "14:00-16:00",
-      "status": "待审核"
-  }],
-
-    contactList2: [{
-      "name": "致远毕至居",
-      "time": "2019-11-14",
-      "place": "14:00-16:00",
-      "status": "已审核"
-    }, {
-      "name": "尚雅毕至居",
-      "time": "2019-11-13",
-      "place": "14:00-16:00",
-      "status": "已审核"
-    }]
+        "time": "尚雅楼 10:00-14:00",
+        "date": "2019-11-14",
+        "status": "待审核",
+  }, {
+        "time": "尚雅楼 10:00-14:00",
+        "date": "2019-11-14",
+        "status": "待审核",
+      }, {
+        "time": "尚雅楼 10:00-14:00",
+        "date": "2019-11-14",
+        "status": "待审核",
+      }, {
+        "time": "尚雅楼 10:00-14:00",
+        "date": "2019-11-14",
+        "status": "待审核",
+      }, {
+        "time": "尚雅楼 10:00-14:00",
+        "date": "2019-11-14",
+        "status": "待审核",
+      }, {
+        "time": "尚雅楼 10:00-14:00",
+        "date": "2019-11-14",
+        "status": "待审核",
+      }, {
+        "time": "尚雅楼 10:00-14:00",
+        "date": "2019-11-14",
+        "status": "待审核",
+      }]
   },
 
   /**
@@ -38,6 +49,12 @@ Page({
     // this.getAnnouncement();
   },
   
+  button1: function () {
+    wx.navigateTo({
+      url: '../resermanager/resermanager'
+    })
+  },
+
   button2: function () {
     wx.navigateTo({
       url: '../venuemanager/venuemanager'

@@ -1,11 +1,25 @@
 // pages/user/user.js
 Page({
-
+ 
   /**
    * 页面的初始数据
    */
+ 
   data: {
-
+    status: '正常',
+    contactList: [{
+      "name": "张三",
+      "sno": "31701011",
+      "tel": "13348774655"
+    }, {
+      "name": "李四",
+      "sno": "31701023",
+      "tel": "13587678889"
+    }, {
+      "name": "王五",
+      "sno": "31701025",
+      "tel": "13587678689"
+    }]
   },
 
   /**
@@ -70,5 +84,23 @@ Page({
 
   tag: function () {
 
+  },
+
+  btn: function () {
+    var myThis = this;
+    var list = ['正常', '异常']
+    wx.showActionSheet({
+      itemList: ['正常', '异常'],
+      success(res) {
+        // console.log(res.tapIndex)
+        myThis.setData({
+          status: list[res.tapIndex]
+        })
+      },
+      fail: function (res) {
+        console.log(res.errMsg)
+      },
+    })
   }
+
 })

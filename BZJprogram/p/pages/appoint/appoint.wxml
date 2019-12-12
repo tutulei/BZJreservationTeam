@@ -1,5 +1,5 @@
 <!--logs.wxml-->
-<view class="page">
+<view>
   <swiper indicator-dots="true" autoplay="true" interval="2500" wx:if="{{venuename=='尚雅楼'}}">
     <swiper-item>
       <image class="img" style="width: 100%;" mode="widthFix" src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/img1.jpg"></image>
@@ -73,5 +73,8 @@
     </view>
   </scroll-view>
 
-  <button class="button" hover-class="btn-hover" bindtap="submit">提交预约</button>
+  <view class="btn-area">
+    <button class="button" hover-class="btn-hover" bindtap="submit">提交预约</button>
+  </view>
+  
 </view>
