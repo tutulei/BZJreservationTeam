@@ -5,6 +5,7 @@
 </view>
 <!-- <text>----------我是分割线----------\n</text> -->
 <text class="title">待审核预约</text>
+<view class="tip" hidden="{{!noenreser}}">zzz暂无预约zzz</view>
 <scroll-view scroll-y="true" style="height: 780rpx;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll">
 <view>
   <view class="container list-container">
@@ -12,8 +13,8 @@
       <image class="left" src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/img2.jpg"></image>
       <view class="right">
         <view class="title1">
-          <view class="time">{{item.time}}</view>
-          <view class="date">{{item.date}}</view>
+          <view class="time">{{item.venuename}}</view>
+          <view class="date">{{item.reserdate}}</view>
         </view>
         <view class="status">{{item.status}}</view>
       </view>

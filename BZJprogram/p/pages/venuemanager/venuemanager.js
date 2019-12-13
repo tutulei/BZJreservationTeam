@@ -1,14 +1,17 @@
 // pages/place/place.js
+const app = getApp()
+
 Page({
-    
+
   /**
    * 页面的初始数据
    */
   data: {
-    yyPlace: '',
+    yyPlace:'',
     yyTime: '',
     yyDate: '',
-    yyStatus: ''
+    yyStatus:'',
+    venueid: ''
   },
 
   /**
@@ -18,60 +21,11 @@ Page({
 
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
-
   btn: function () {
     var myThis = this;
-    var list = ['尚雅毕至居', '致远毕至居']
+    var list = ['北校区尚雅楼', '南校区致远楼']
     wx.showActionSheet({
-      itemList: ['尚雅毕至居', '致远毕至居'],
+      itemList: ['北校区尚雅楼', '南校区致远楼'],
       success(res) {
         // console.log(res.tapIndex)
         myThis.setData({
@@ -114,10 +68,16 @@ Page({
     wx.showActionSheet({
       itemList: ['启用', '禁用'],
       success: function (res) {
-        console.log(res.tapIndex)
-        myThis.setData({
-          yyStatus: list[res.tapIndex]
-        })
+        if (res.tapIndex== 0){
+          myThis.setData({
+            yyStatus: app.globalData.STATUS_VENUE_CR
+          })
+        }
+        else if (res.tapIndex== 1){
+          myThis.setData({
+            yyStatus: app.globalData.STATUS_VENUE_NO
+          })
+        }
       },
       fail: function (res) {
         console.log(res.errMsg)
@@ -125,14 +85,41 @@ Page({
     })
   },
 
+  updateStatus: function () {
+    const db = wx.cloud.database()
+
+    db.collection('venue').where({
+      venue_addr: this.data.yyPlace,
+      venue_time: this.data.yyTime
+    }).get({
+      success: res => {
+        var data = res.data[0]
+        this.setData({
+          venueid: data.venue_id
+        })
+      }
+    })
+    
+    db.collection('venuediffstatus').add({
+      // 要插入的数据
+      data: {
+        venue_date: this.data.yyDate,
+        venue_id: this.data.venueid,
+        venue_status: this.data.yyStatus,
+        }
+      })
+      
+  },
+
   submit: function () {
+    this.updateStatus()
     wx.showToast({
       title: '成功',
       icon: 'success',
       duration: 2000
     }),
       wx.navigateBack({
-        delta: 2,
+        delta: 1,
       })
   }
 

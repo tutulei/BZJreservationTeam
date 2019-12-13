@@ -9,7 +9,8 @@
     "pages/date/date",
     "pages/invite/invite",
     "pages/detail/detail",
-    "pages/resermanager/resermanager"
+    "pages/resermanager/resermanager",
+    "pages/check/check"
   ],
   "window": {
     "backgroundTextStyle": "light",
