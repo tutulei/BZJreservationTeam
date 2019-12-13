@@ -29,11 +29,11 @@
     <text class="no">{{item.no}}</text>
   </view>
   <!-- <button class="button" bindtap="submit" hidden="{{!isleader}}">提交申请</button> -->
-  <picker bindchange="removeMenber" value="{{menberindex}}" range="{{menberslist}}">
+  <!-- <picker bindchange="removeMenber" value="{{menberindex}}" range="{{menberslist}}">
     <view class="picker">
     当前选择：{{menberslist[menberindex]}}
     </view>
-  </picker>
+  </picker> -->
 
 
   <view class="btn-area">

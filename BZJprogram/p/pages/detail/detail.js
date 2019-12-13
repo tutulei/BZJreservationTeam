@@ -30,7 +30,7 @@ Page({
     havetools: false,
     finish:false,
     resermenbers:"",
-    menberindex:-1,
+    menberindex:0,
     menberslist: [{
       name:"无"
     }],
@@ -268,12 +268,9 @@ Page({
       }
     })
   },
-  //提出成员
+  //踢出成员
   removeMenber:function(e){
-    console.log('picker下拉项发生变化后，下标为：', e.detail.value)
-    this.setData({
-      menberindex: e.detail.value
-    })
+    var that = this
     if (this.data.menberslist[0].no === undefined){
       wx.showToast({
         icon: 'none',
@@ -281,9 +278,36 @@ Page({
         duration:2000
       })
     }else{
-      this.updateReservation(this.data.menberslist[this.data.menberindex].no)
-      this.updateMenberStatus(this.data.menberslist[this.data.menberindex].no)
+      // console.log(this.data.menberslist)
+      wx.showActionSheet({
+        itemList: this.getMenbersListName(),
+        success: res => {
+
+          this.updateReservation(this.data.menberslist[res.tapIndex].no)
+          this.updateMenberStatus(this.data.menberslist[res.tapIndex].no)
+          wx.showToast({
+            icon:"none",
+            title: '抛弃队友中……',
+            mask:true,
+            duration: 2000
+          })
+          this.setresermsg()
+          console.log(res.tapIndex)
+        },
+        fail: function (res) {
+          console.log(res.errMsg)
+        }
+      })
     }
+  },
+  getMenbersListName:function(){
+    var l = this.data.menberslist.length
+    var list = []
+    for (var i = 0; i < l; i++){
+      list.push(this.data.menberslist[i].name)
+    }
+    console.log(list)
+    return list
   },
   //退出预约功能
   quitReservation:function(){
@@ -459,17 +483,32 @@ Page({
   updateMenberStatus:function(no){
       //实现用户状态改变
     const db = wx.cloud.database()
+    console.log()
     db.collection('user').where({
       user_no:no,
     }).get({
       success: res => {
         var id = res.data[0]._id
-        db.collection('user').doc(id).update({
+        wx.cloud.callFunction({
+          name: 'modifyDatabase',
           data: {
-            reservation_id: "",
-            user_status: app.globalData.STATUS_USER_CR,
-          }
+            name: 'user',
+            id: id,
+            data: {
+              reservation_id: "",
+              user_status: app.globalData.STATUS_USER_CR,
+            },
+          },
+          complete: res => {
+            
+          },
         })
+        // db.collection('user').doc(id).update({
+          // data: {
+          //   reservation_id: "",
+          //   user_status: app.globalData.STATUS_USER_CR,
+          // }
+        // })
       },
       fail: err => {
         wx.showToast({
