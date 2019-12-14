@@ -12,9 +12,67 @@
     </view>
 </view>
 
-<view bindtap="blacklist">
+
+<!-- <scroll-view scroll-y="{{isScroll}}" style='height:{{windowHeight}}px'>
   <view class="container list-container">
-    <view class="list-item" wx:for="{{contactList}}" bindtap='btn'>
+    <block wx:key="item" wx:for="{{contactList}}">
+      <view data-index='{{index}}' class="order-item" bindtouchstart="drawStart" bindtouchmove="drawMove" bindtouchend="drawEnd" style="right:{{item.right}}rpx">
+        <image class="left" src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/person.png"></image>
+        <view class="right">
+          <view class="title">
+            <view class="name">{{item.name}}</view>
+            <view class="tel">{{item.tel}}</view>
+          </view>
+          <view class="title2">
+            <view class="sno">{{item.sno}}</view>
+          </view>
+          <view class="remove" bindtap="delItem">移除 </view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view> -->
+
+<!-- <view class="item-box">
+  <view class="items">
+    <view wx:for="{{list}}" wx:key="{{index}}" class="item">
+      <view bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" data-index="{{index}}" style="{{item.txtStyle}}" class="inner txt">
+        <image class="left" src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/person.png"></image>
+        <view class="right">
+          <view class="title">
+            <view class="name">{{item.name}}</view>
+            <view class="tel">{{item.tel}}</view>
+          </view>
+          <view class="title2">
+            <view class="sno">{{item.sno}}</view>
+          </view>
+          <view class="remove" bindtap="delItem">移除 </view>
+        </view>
+      </view>
+      <view data-index="{{index}}" bindtap="delItem" class="inner del">移除</view>
+    </view>
+  </view>
+</view> -->
+
+<view class="container">
+  <view class= "{{item.isTouchMove ? 'item-active' : 'item'}}" bindtouchstart='touchstart' bindtouchmove='touchmove' wx:for="{{list}}" wx:key='' data-index="{{index}}">
+    <image class="left" src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/person.png"></image>
+    <view class="right">
+      <view class="title">
+        <view class="name">{{item.name}}</view>
+        <view class="tel">{{item.tel}}</view>
+      </view>
+      <view class="title2">
+        <view class="sno">{{item.sno}}</view>
+      </view>
+    <view class='del' bindtap="del" data-index="{{index}}">移除</view>
+    </view>
+  </view>
+</view>
+
+<!-- <view bindtap="blacklist">
+  <view class="container list-container">
+    <view class="list-item" wx:for="{{contactList}}">
       <image class="left" src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/person.png"></image>
       <view class="right">
         <view class="title">
@@ -23,18 +81,14 @@
         </view>
         <view class="title2">
           <view class="sno">{{item.sno}}</view>
-          <view class="section">
-            <view class='btn'>状态:</view>
-            <view class="text2">{{status}}</view>
-          </view>
         </view>
       </view>
     </view>
-  </view> 
+  </view>  -->
 
-  <view id="rsstatus">{{rsstatus}}</view>
+  <!-- <view id="rsstatus">{{rsstatus}}</view>
   <view class="venuename">{{venuename}}</view>
-</view>
+</view> -->
 
 
 

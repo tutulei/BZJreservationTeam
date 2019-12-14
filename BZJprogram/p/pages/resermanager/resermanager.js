@@ -43,10 +43,14 @@ Page({
     })
   },
 
-  check: function () {
+  check: function (event) {
+
+    var i = event.currentTarget.dataset.index
+    // console.log("sadasd" + i)
     wx.navigateTo({
-      url: '../check/check'
+      url: '../check/check?reser_id=' + this.data.contactList[i].reserid + "&venue_id=" + this.data.contactList[i].venueid
     })
+
   },
 
 

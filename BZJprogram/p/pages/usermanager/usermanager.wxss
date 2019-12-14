@@ -4,6 +4,48 @@
 }
 
 .container{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.item, .item-active{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: 8rpx solid darkgray;
+  height:100rpx;
+  line-height: 80px;
+  font-size: 16px;
+  margin: 10px;
+  padding:20rpx;
+}
+
+/* .txt{
+  width: 100%;
+  margin-right:0;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+  transform: translateX(90px); 
+  margin-left: -90px; 
+} */
+
+.del{
+  background-color: red;
+  width: 90px;
+  height: 140rpx;
+  color: #fff;
+  text-align: center;
+  transform: translateX(90px);
+  transition: all 0.4s;   
+}
+
+.item-active .left,.item-active .right, .item-active .del{
+  transform: translateX(0); 
+}
+
+/* .container{
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -33,6 +75,7 @@
   flex-direction: row;
   padding:20rpx;
 }
+*/
 
 .left{
   width: 100rpx;
@@ -40,9 +83,9 @@
 }
  
 .right{
-  width: 590rpx;
+  width: 500rpx;
   height: 100rpx;
-  margin-left: 20rpx;
+  margin-left: 10rpx;
   display: flex;
   flex-direction: row;
 }
@@ -51,14 +94,16 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  width: 310rpx;
+  width: 250rpx;
+  height: 100rpx;
 }
 
 .title2{
   flex: 1;
   display: flex;
   flex-direction: column;
-  width: 310rpx;
+  width: 400rpx;
+  height: 100rpx;
 }
 
 .name{
@@ -78,20 +123,26 @@
   font-size: 35rpx;
 }
 
-.text2{
-  font-size: 30rpx;
-  color:rgb(219, 64, 64);
+/*
+.order-item {
+  height: 100rpx;
+  width: 100%;
+  display: flex;
+  position: relative;
 }
 
-.btn {
-  width: 80px;
-  height: 40px;
-  background-color: #eeeeee;
-  color: black;
-  border-radius: 98rpx; 
-  text-align: center; 
-  line-height: 40px;
-}
+.remove{  
+  width: 200rpx;  
+  height: 100rpx;  
+  background-color: red; 
+  color: white; 
+  position: absolute;  
+  top: 0;  
+  right: -160rpx;  
+  display: flex;  
+  justify-content: center;  
+  align-items: center;  
+} */
 
 .avatar-wrapper {
   background: #e27d08;
@@ -122,3 +173,4 @@
   justify-content: flex-start;
   align-items: center;
 }
+

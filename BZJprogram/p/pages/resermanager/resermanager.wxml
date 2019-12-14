@@ -9,7 +9,7 @@
 <scroll-view scroll-y="true" style="height: 780rpx;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll">
 <view>
   <view class="container list-container">
-    <view class="list-item" wx:for="{{contactList}}" bindtap="uncheck">
+    <view class="list-item" wx:for="{{contactList}}" bindtap="check"  data-index="{{index}}">
       <image class="left" src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/img2.jpg"></image>
       <view class="right">
         <view class="title1">

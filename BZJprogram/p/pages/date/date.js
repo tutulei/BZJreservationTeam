@@ -1,10 +1,18 @@
 // pages/date/date.js
 Page({
+  onLoad: function (options) {
+    wx.showLoading({
+      title: "慢吞吞地加载中",
+      mask: true,
+    })
+    this.setDiffReservationMsg()
+
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    wx.hideLoading()
   },
 
   /**
@@ -81,6 +89,19 @@ Page({
     { hour: "致远楼 10:00-14:00", n: 3, isShow: true },
     { hour: "致远楼 16:00-20:00", n: 4, isShow: true }
     ],
+
+    /*fbdreserList为不能选择的场次列表，格式为
+    [
+      {
+      venuename:"尚雅楼",
+      venuetime:"10:00-14:00",
+      date:"2021-10-12"
+      },
+      {……},
+      ……
+      ]
+    */
+    fbdreserList:[],
     //是否显示
     timeShow: false,
     currentTab: 0,
@@ -185,8 +206,8 @@ Page({
         "h+": this.getHours(),    //hour
         "m+": this.getMinutes(),  //minute
         "s+": this.getSeconds(), //second
-        "q+": Math.floor((this.getMonth() + 3) / 3),  //quarter
-        "S": this.getMilliseconds() //millisecond
+        "q+": Math.floor((this.getMonth() + 3) / 3), 
+        "S": this.getMilliseconds(), //millisecond
       }
       if (/(y+)/.test(format)) {
         format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
@@ -243,5 +264,46 @@ Page({
       chooseTime: this.data.timeList[0].date,
     });
     this.getVenueId()
+  },
+  setDiffReservationMsg:function(){
+    const db = wx.cloud.database();
+    const _ = db.command
+    db.collection('venuediffstatus').where({
+      venue_status: _.or(_.eq(app.globalData.STATUS_RESER_WA), _.eq(app.globalData.STATUS_VENUE_HR)),
+    }).get({
+      success: res => {
+        var data = res.data
+        var list = [];
+        for (var i = 0; i < s.length; i++) {
+          var jstr = {}
+          jstr.date = data[i].venue_date
+          jstr.venuename = ""
+          jstr.venuetime = ""
+          list.push(jstr)
+          this.setData({
+            fbdreserList:list
+          })
+          this.setDiffVenueMsg(i,data[i].venue_id)
+
+        }
+
+
+      }
+    })
+  },
+  setDiffVenueMsg:function(i,id){
+    const db = wx.cloud.database();
+    db.collection('venue').where({
+      _id:id
+    }).get({
+      success: res => {
+        var list = this.data.fbdreserList
+        list[i].venuename = res.data[0].venue_name
+        list[i].venuetime = res.data[0].venue_time
+        this.setData({
+          fbdreserList: list,
+        })
+      }
+    })
   }
 })
