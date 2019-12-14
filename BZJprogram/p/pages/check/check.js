@@ -53,64 +53,12 @@ Page({
     this.setInviteCode()
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
-
-  kick: function() {
-    
-  },
-
   exit: function () {
     wx.navigateBack({
       delta: 1,
     })
   },
+  
   setvenuemsg:function(){
     const db = wx.cloud.database()
     db.collection('venue').where({
@@ -244,24 +192,56 @@ Page({
       success: res => {
         if (res.confirm) {
           console.log('用户点击确定')
-          this.updateStatus()
-          wx.navigateBack({
-            delta: 1,
-          });
+          wx.cloud.callFunction({
+            name: 'modifyDatabase',
+            data: {
+              name: 'reservation',
+              id: this.data.reser_id,
+              data: {
+                reservation_status: app.globalData.STATUS_RESER_OK,
+              },
+            },
+            complete: res => {
+              wx.navigateBack({
+                delta: 1,
+              })
+            },
+          })
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
       }
     })
   },
-  updateStatus:function(){
-    const db = wx.cloud.database()
-    db.collection('reservation').doc(this.data.reser_id).update({
-      data: {
-        reservation_status: app.globalData.STATUS_RESER_OK,
+
+  refuseCheck:function(){
+    wx.showModal({
+      title: '提示',
+      content: '是否确定拒绝预约',
+      icon: 'none',
+      duration: 3000,
+      success: res => {
+        if (res.confirm) {
+          console.log('用户点击确定')
+          wx.cloud.callFunction({
+            name: 'modifyDatabase',
+            data: {
+              name: 'reservation',
+              id: this.data.reser_id,
+              data: {
+                reservation_status: app.globalData.STATUS_RESER_NO,
+              },
+            },
+            complete: res => {
+              wx.navigateBack({
+                delta: 1,
+              })
+            },
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
       }
-    }).then(res => {
-      // console.log(res)
     })
   }
 })

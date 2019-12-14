@@ -59,6 +59,7 @@ App({
     STATUS_RESER_WA: "审核中",
     STATUS_RESER_OK: "已过审",
     STATUS_RESER_FN: "已结束",
+    STATUS_RESER_NO: "未通过",
     STATUS_RESER_FD: "违约",
 
     STATUS_USER_CR: "可预约",

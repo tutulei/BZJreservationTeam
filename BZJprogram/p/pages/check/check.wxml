@@ -31,7 +31,8 @@
   <!-- <button class="button" bindtap="submit" hidden="{{!isleader}}">提交申请</button> -->
 
   <view class="btn-area">
-    <button class="button2" bindtap="checkout" >审核通过</button>
+    <button class="button1" bindtap="checkout" >审核通过</button>
+    <button class="button2" bindtap="refuseCheck" >拒绝预约</button>
   </view>
 </view>
 
