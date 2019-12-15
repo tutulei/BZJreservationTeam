@@ -30,7 +30,7 @@ App({
             this.globalData.openid = res.result.openid
           }
         })
-        
+        this.init()
       }
     })
     // 获取用户信息
@@ -51,6 +51,87 @@ App({
             }
           })
         }
+      }
+    })
+  },
+  init: function () {
+    var date = new Date();
+    var month = date.getMonth() + 1
+    var year = date.getFullYear()
+    var day = date.getDate()
+    const db = wx.cloud.database()
+    db.collection('reservation').where({
+      reservation_status: this.globalData.STATUS_RESER_OK,
+    }).get({
+      success: res => {
+        var data = res.data
+        // console.log(data)
+        var l = data.length
+        for (var i = 0; i < l; i++) {
+          var rdate = data[i].reservation_date.split("-")
+          console.log(rdate)
+          if ((year > rdate[0]) || ((year == rdate[0]) & (month > rdate[1])) || ((year == rdate[0]) & (month == rdate[1]) & (day > day[2]))){
+
+            wx.cloud.callFunction({
+              name: 'modifyDatabase',
+              data: {
+                name: 'reservation',
+                id: data[i]._id,
+                data: {
+                  reservation_status: this.globalData.STATUS_RESER_FN,
+                },
+              },
+              complete: res => {
+                console.log("finish")
+                console.log(res.result)
+              },
+            })
+            this.updateMenbermsg(data[i])
+          }
+        }
+      }
+    })
+  },
+  updateMenbermsg:function(data){
+    console.log(data)
+    var menbers = data.reservation_menber
+    this.updateMenberStatus(data.user_no)
+    if (menbers !== "") {
+      var menbersnolist = menber.split(",")
+      for (var i = 0; i < menbersnolist.length; i++) {
+        this.updateMenberStatus(menbersnolist[i])
+      }
+    }
+  },
+  updateMenberStatus: function (no) {
+    const db = wx.cloud.database()
+    console.log()
+    db.collection('user').where({
+      user_no: no,
+    }).get({
+      success: res => {
+        var id = res.data[0]._id
+        wx.cloud.callFunction({
+          name: 'modifyDatabase',
+          data: {
+            name: 'user',
+            id: id,
+            data: {
+              reservation_id: "",
+              user_status: this.globalData.STATUS_USER_CR,
+            },
+          },
+          complete: res => {
+
+          },
+        })
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.error('[数据库] [查询记录] 失败：', err)
       }
     })
   },

@@ -37,6 +37,7 @@ Page({
       title:"慢吞吞地加载中",
       mask:true,
     })
+    // this.init()
     this.getUsermsg();
     this.getAnnouncement();
 
@@ -373,5 +374,5 @@ Page({
       }
     })
   },
-
+  
 })

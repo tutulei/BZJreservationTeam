@@ -210,6 +210,7 @@ Page({
         menbers = res.data[0].reservation_menber
         var user_no = res.data[0].user_no
         // console.log("``````" + "menbers:"+menbers)
+        
         if (user_no !== app.globalData.usermsg.user_no){
           var newmenbers = (menbers === "") ? app.globalData.usermsg.user_no : (menbers + "," + app.globalData.usermsg.user_no)
           this.updateMenbers(id, newmenbers)

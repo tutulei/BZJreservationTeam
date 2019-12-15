@@ -19,6 +19,7 @@ Page({
     venueaddr: "",
     veneutime: "",
     userno: "",
+    userid: "",
     leadername: "",
     venuedes: "",
     reserdate: "",
@@ -53,12 +54,6 @@ Page({
     this.setInviteCode()
   },
 
-  exit: function () {
-    wx.navigateBack({
-      delta: 1,
-    })
-  },
-  
   setvenuemsg:function(){
     const db = wx.cloud.database()
     db.collection('venue').where({
@@ -233,15 +228,44 @@ Page({
               },
             },
             complete: res => {
-              wx.navigateBack({
-                delta: 1,
-              })
+              this.getMemberid()
             },
           })
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
       }
+    })
+  },
+
+  getMemberid:function(){
+    var i = 0;
+    const db = wx.cloud.database()
+    for(i=0;i<this.data.menberslist.length;i++){
+      db.collection('user').where({
+        user_no: this.data.menberslist[i].no
+      }).get({
+        success: res => {
+          // console.log(res.data[0])
+          this.modifyUserStatus(res.data[0]._id)
+        }
+      })
+    }
+  },
+  
+  modifyUserStatus:function(n){
+    wx.cloud.callFunction({
+      name: 'modifyDatabase',
+      data: {
+        name: 'user',
+        id: n,
+        data: {
+          user_status: app.globalData.STATUS_USER_CR,
+        },
+      },
+      complete: res => {
+        
+      },
     })
   }
 })
