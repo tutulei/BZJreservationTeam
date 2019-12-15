@@ -1,36 +1,31 @@
 /* pages/place/place.wxss */
-
-.text2{
-  color: darkgoldenrod;
-}
-
 .avatar-wrapper {
-  background: #e27d08c9;
-  height: 40px;
-  padding: 10px 0;
-}
-
-
-.avatar-wrapper .content image {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  flex-flow: row nowrap;
+  height: 25px;
+  width: 100%;
+  background: #e27d08;
+  padding: 10px 0;
+  margin-bottom: 40px;
+}
+
+.avatar-wrapper image {
+  display: block;
+  margin-left: 20px;
   width: 25px;
   height: 25px;
 }
 
-.avatar-wrapper .content homeusermsg {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  font-size: 10px;
-
+#username {
+  display: block;
+  position: fixed;
+  left: 70px;
 }
 
 .section {
-  border: 8rpx solid black;
+  border: 2rpx solid black;
   margin: 10px;
-  border: solid 1px;
   border-radius: 5px;
   height: 60px;
   width: 95%;
@@ -41,17 +36,15 @@
   align-items: center;
 }
 
-.btn {
-  width: 80px;
-  height: 40px;
-  background-color: burlywood;
-  color: black;
-  border-radius: 98rpx; 
-  text-align: center; 
-  line-height: 40px;
+.text2{
+  color: darkgoldenrod;
 }
 
-.picker {
+.text{
+  margin-left: 10px;
+}
+
+.btn,.picker {
   width: 80px;
   height: 40px;
   background-color: burlywood;
@@ -59,15 +52,16 @@
   border-radius: 98rpx; 
   text-align: center; 
   line-height: 40px;
+  margin-right: 5px;
 }
 
 .sec{
   align-content: center;
 }
 
-.submit{
+.button{
   margin: 20px;
   width: 100%;
-  background-color: rgb(243, 122, 9);
-  color:brown;
+  background-color: #e27d08;
+  color:white;
 }

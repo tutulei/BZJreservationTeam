@@ -10,6 +10,8 @@
     "pages/invite/invite",
     "pages/detail/detail",
     "pages/resermanager/resermanager",
+    "pages/usermanager/usermanager",
+    "pages/venuemanager/venuemanager",
     "pages/check/check"
   ],
   "window": {
