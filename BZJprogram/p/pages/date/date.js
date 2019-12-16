@@ -1,25 +1,65 @@
 // pages/date/date.js
+const app = getApp()
 Page({
-  onLoad: function (options) {
-    wx.showLoading({
-      title: "慢吞吞地加载中",
-      mask: true,
-    })
-    this.setDiffReservationMsg()
+  /**
+ * 页面的初始数据
+ */
+  data: {
+    venue_id: "",
+    date: "",
+    isclick: false,
+    //日期
+    timeList: [],
+    //可预约天数
+    yyDay: 7,
+    //预约时间段
+    hourList: [
+      { hour: "尚雅楼 10:00-14:00", n: 1, isShow: true },
+      { hour: "尚雅楼 16:00-20:00", n: 2, isShow: true },
+      { hour: "致远楼 10:00-14:00", n: 3, isShow: true },
+      { hour: "致远楼 16:00-20:00", n: 4, isShow: true }
+    ],
 
+    /*fbdreserList为不能选择的场次列表，格式为
+    [
+      {
+      venuename:"尚雅楼",
+      venuetime:"10:00-14:00",
+      date:"2021-10-12"
+      },
+      {……},
+      ……
+      ]
+    */
+    fbdreserList: [],
+    //是否显示
+    timeShow: false,
+    currentTab: 0,
+    //选择时间
+    chooseHour: "",
+    //选择日期
+    chooseTime: "",
+    hourIndex: -1,
+    //预约时间
+    yyTime: ''
+  },
+
+  onLoad: function (options) {
+    console.log("ishfkjsd")
+    this.setDiffReservationMsg()
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    wx.hideLoading()
+
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setDiffReservationMsg()
   },
 
   /**
@@ -71,48 +111,7 @@ Page({
     }
   },
 
-  /**
-   * 页面的初始数据
-   */
-  data: {
-    venue_id: "",
-    date: "",
-    isclick: false,
-    //日期
-    timeList: [],
-    //可预约天数
-    yyDay: 7,
-    //预约时间段
-    hourList: [
-    { hour: "尚雅楼 10:00-14:00", n: 1, isShow: true },
-    { hour: "尚雅楼 16:00-20:00", n: 2, isShow: true },
-    { hour: "致远楼 10:00-14:00", n: 3, isShow: true },
-    { hour: "致远楼 16:00-20:00", n: 4, isShow: true }
-    ],
 
-    /*fbdreserList为不能选择的场次列表，格式为
-    [
-      {
-      venuename:"尚雅楼",
-      venuetime:"10:00-14:00",
-      date:"2021-10-12"
-      },
-      {……},
-      ……
-      ]
-    */
-    fbdreserList:[],
-    //是否显示
-    timeShow: false,
-    currentTab: 0,
-    //选择时间
-    chooseHour: "",
-    //选择日期
-    chooseTime: "",
-    hourIndex: -1,
-    //预约时间
-    yyTime: ''
-  },
   //日期选择
   timeClick: function (e) {
     //(所有时间点都可选择)
@@ -269,12 +268,13 @@ Page({
     const db = wx.cloud.database();
     const _ = db.command
     db.collection('venuediffstatus').where({
-      venue_status: _.or(_.eq(app.globalData.STATUS_RESER_WA), _.eq(app.globalData.STATUS_VENUE_HR)),
+      venue_status: app.globalData.STATUS_VENUE_NO
     }).get({
       success: res => {
         var data = res.data
+        console.log(data)
         var list = [];
-        for (var i = 0; i < s.length; i++) {
+        for (var i = 0; i < data.length; i++) {
           var jstr = {}
           jstr.date = data[i].venue_date
           jstr.venuename = ""
@@ -283,11 +283,9 @@ Page({
           this.setData({
             fbdreserList:list
           })
+          console.log("list:"+this.data.fbdreserList)
           this.setDiffVenueMsg(i,data[i].venue_id)
-
         }
-
-
       }
     })
   },
@@ -303,6 +301,7 @@ Page({
         this.setData({
           fbdreserList: list,
         })
+        console.log(this.data.fbdreserList)
       }
     })
   }

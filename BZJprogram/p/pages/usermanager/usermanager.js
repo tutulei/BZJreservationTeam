@@ -1,4 +1,6 @@
 // pages/user/user.js
+const app = getApp()
+
 Page({
 
   /**
@@ -6,87 +8,18 @@ Page({
    */
 
   data: {
-    username: "管理员，你好！",
-    list: [{
-      name: "张三",
-      sno: "31701011",
-      tel: "13348774655",
-      isTouchMove: false
-    }, {
-      name: "李四",
-      sno: "31701023",
-      tel: "13587678889",
-      isTouchMove: false
-    }, {
-      name: "王五",
-      sno: "31701025",
-      tel: "13587678689",
-      isTouchMove: false
-    }]
+    list: [],
+    nouser:true,
+    isShowConfirm: false,
+    userno:"",
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
-
-  search: function () {
-
-  },
-
-  tag: function () {
-
+    this.checkEndDate()
+    this.getBlacklist()
   },
 
   touchstart: function (e) {
@@ -135,13 +68,217 @@ Page({
       success: (res) => {
         if (res.confirm) {
           let listItem = this.data.list[e.currentTarget.dataset.index]
+          console.log(listItem)
+          this.setUserstatus(listItem.sno, app.globalData.STATUS_USER_CR)
+          this.removeBlackMsg(listItem._id)
           this.data.list.splice(e.currentTarget.dataset.index, 1)
-          this.setData({ list: this.data.list })
+          this.setData({
+            list: this.data.list
+          })
+          if (this.data.list.length === 0) {
+            this.setData({
+              nouser: true
+            })
+          } else {
+            this.setData({
+              nouser: false
+            })
+          }
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
       }
     })
-  }
+  },
 
+  add: function () {
+    var startTime = new Date()
+    var timestamp = Date.parse(startTime);
+    timestamp = timestamp / 1000 + 24 * 60 * 60 * 7;
+    var endTime = new Date(this.toDate(timestamp))
+    
+    wx.cloud.callFunction({
+      name: 'addDatabase',
+      data: {
+        name: 'blackroom',
+      },
+      data: {
+        blackroom_startdate: startTime,
+        blackroom_finishdate: endTime,
+        user_no: this.data.userno
+      },
+      complete: res => {
+        console.log("操作成功")
+      },
+    })
+    this.setUserstatus(this.data.userno, app.globalData.STATUS_USER_BL)
+    this.setData({
+      isShowConfirm: false
+    })
+  },
+
+  getBlacklist:function (){
+    const db = wx.cloud.database()
+    db.collection('blackroom').get({
+      success: res => {
+        // console.log('[数据库] [查询记录] 成功: ', res.data[0])
+        var data = res.data
+        for (var i = 0; i < data.length; i++) {
+          this.getUserMsg(data[i].user_no,data[i]._id)
+        }
+        if (data.length===0){
+          this.setData({
+            nouser:true
+          })
+        }else{
+          this.setData({
+            nouser: false
+          })
+        }
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.error('[数据库] [查询记录] 失败：', err)
+      }
+    })
+  },
+
+  getUserMsg: function (userno,_id) {
+    const db = wx.cloud.database()
+    var list = this.data.list
+    db.collection('user').where({
+      user_no: userno
+    }).get({
+      success: res => {
+        var data = res.data[0]
+        var jstr = {}
+        jstr.sno = data.user_no
+        jstr.name = data.user_name
+        jstr.tel = data.user_phone
+        jstr.isTouchMove = false
+        jstr._id = _id
+        list.push(jstr)
+        this.setData({
+          list: list,
+        })
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.error('[数据库] [查询记录] 失败：', err)
+      }
+    })
+  },
+
+  checkEndDate: function () {
+    const db = wx.cloud.database()
+    const _ = db.command
+    var currentTime = new Date();
+    console.log(currentTime)
+    db.collection('blackroom').where({
+      blackroom_finishdate: _.lte(currentTime),
+    }).get({
+      success: res => {
+        var i = 0;
+        for(i = 0;i < data.length ; i++){
+          this.setUserstatus(res.data[i].user_no, app.globalData.STATUS_USER_CR)
+          this.removeBlackMsg(res.data[i]._id)
+        }
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.error('[数据库] [查询记录] 失败：', err)
+      }
+    })
+  },
+
+  removeBlackMsg: function (id) {
+    wx.cloud.callFunction({
+      name: 'removeDatabase',
+      data: {
+        name: 'blackroom',
+        id: id,
+      },
+      complete: res => {
+        console.log(id,res)
+        console.log("removeBlackroomMsg操作成功")
+      },
+    })
+  },
+
+  setUserstatus: function (no,status) {
+    const db = wx.cloud.database()
+    db.collection('user').where({
+      user_no : no
+    }).get({
+      success: res => {
+        this.updateStatus(res.data[0]._id,status)
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.error('[数据库] [查询记录] 失败：', err)
+      }
+    })
+  },
+
+  updateStatus: function (userid,status) {
+    wx.cloud.callFunction({
+      name: 'modifyDatabase',
+      data: {
+        name: 'user',
+        id: userid,
+        data: {
+          user_status: status,
+        },
+      },
+
+      complete: res => {
+        console.log(userid)
+        console.log("操作成功")
+      },
+    })
+  },
+
+  toDate: function (number) {
+    var n = number;
+    var date = new Date(parseInt(n) * 1000);
+    var y = date.getFullYear();
+    var m = date.getMonth() + 1;
+    m = m < 10 ? ('0' + m) : m;
+    var d = date.getDate();
+    d = d < 10 ? ('0' + d) : d;
+    var h = date.getHours();
+    h = h < 10 ? ('0' + h) : h;
+    var minute = date.getMinutes();
+    var second = date.getSeconds();
+    minute = minute < 10 ? ('0' + minute) : minute;
+    second = second < 10 ? ('0' + second) : second;
+    return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
+  },
+  showConfirm:function(){
+    this.setData({
+      isShowConfirm:true
+    })
+  },
+  cancel:function(){
+    this.setData({
+      isShowConfirm: false
+    })
+  },
+  setValue:function(e){
+    this.setData({
+      userno: e.detail.value,
+    })
+  }
 })

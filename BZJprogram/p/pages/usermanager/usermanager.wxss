@@ -5,7 +5,7 @@
   flex-flow: row nowrap;
   height: 25px;
   width: 100%;
-  background: #e27d08;
+  background: gray;
   padding: 10px 0;
 }
 
@@ -16,10 +16,9 @@
   height: 25px;
 }
 
-#username {
-  display: block;
-  position: fixed;
-  left: 70px;
+#titlename {
+  color: white;
+  padding-right: 10px;
 }
 
 .container {
@@ -107,4 +106,103 @@
   margin-top: 3px;
   color:darkgoldenrod;
   font-size: 32rpx;
+}
+.btn-area{
+  /* background-color:  #eee; */
+  align-items: center;
+  width: 100%;
+  height: 80px;
+  position: fixed;
+  bottom: 0;
+}
+.button{
+  display: block;
+  margin: 20px;
+  width: 100%;
+  background-color:  rgb(192, 192, 192);
+  color:rgba(255, 0, 0, 0.5);
+  /* position: fixed; */
+}
+
+
+
+.toast-box {
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+}
+ 
+ 
+.toastbg {
+    opacity: 0.2;
+    background-color: black;
+    position: absolute;
+    width: 100%;
+    min-height: 100vh;
+}
+ 
+.showToast {
+    position: absolute;
+    opacity: 1;
+    width: 70%;
+    margin-left: 15%;
+    margin-top: 40%;
+}
+ 
+.toast-title {
+    padding-left: 5%;
+    background-color: gray;
+    color: white;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    border-top-right-radius: 16rpx;
+    border-top-left-radius: 16rpx;
+}
+ 
+.toast-main {
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    background-color: white;
+    text-align: center;
+}
+ 
+.toast-input {
+    margin-left: 5%;
+    margin-right: 5%;
+    border: 1px solid #ddd;
+    padding-left: 2vh;
+    padding-right: 2vh;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+}
+ 
+.toast-button {
+    display: flex;
+}
+ 
+.button1 {
+    width: 50%;
+}
+ 
+.button2 {
+    width: 50%;
+}
+ 
+.button1 button {
+    width: 100%;
+    background-color: white;
+    color: black;
+    border-radius: 0px;
+    border-bottom-left-radius: 16rpx;
+}
+ 
+.button2 button{
+    width: 100%;
+    background-color: white;
+    color: red;
+    border-radius: 0px;
+    border-bottom-right-radius: 16rpx;
 }
