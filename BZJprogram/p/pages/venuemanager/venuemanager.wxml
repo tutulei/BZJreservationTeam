@@ -1,18 +1,10 @@
 <!--pages/place/place.wxml-->
 <form bindsubmit="formSubmit" bindreset="formReset">
-
 <view class="avatar-wrapper">
-  <view class='content'>
-      <view class="img">
-        <image src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/person.png"></image>
-      </view>
-
-      <view class='homeusermsg'>
-        <view id="username">{{username}}</view>
-        <view id="userstatus">{{userstatus}}</view>
-      </view>
-    </view>
+  <image src="cloud://yuntest1-xt878.7975-yuntest1-xt878-1300763170/picture/person.png"></image>
+  <view id="username">{{username}}</view>
 </view>
+
 <view class = "sec">
   <view class="section">
     <text class="text">请选择毕至居地点:</text>
