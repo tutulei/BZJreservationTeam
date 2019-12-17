@@ -88,27 +88,28 @@ Page({
 
   updateStatus: function () {
     const db = wx.cloud.database()
-
     db.collection('venue').where({
       venue_addr: this.data.yyPlace,
       venue_time: this.data.yyTime
     }).get({
       success: res => {
+        console.log(res)
         var data = res.data[0]
         this.setData({
-          venueid: data.venue_id
+          venueid: data._id
+        })
+        db.collection('venuediffstatus').add({
+          // 要插入的数据
+          data: {
+            venue_date: this.data.yyDate,
+            venue_id: this.data.venueid,
+            venue_status: this.data.yyStatus,
+          }
         })
       }
     })
-    
-    db.collection('venuediffstatus').add({
-      // 要插入的数据
-      data: {
-        venue_date: this.data.yyDate,
-        venue_id: this.data.venueid,
-        venue_status: this.data.yyStatus,
-        }
-      })
+
+
       
   },
 

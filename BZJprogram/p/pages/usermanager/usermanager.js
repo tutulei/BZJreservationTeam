@@ -96,21 +96,23 @@ Page({
     var timestamp = Date.parse(startTime);
     timestamp = timestamp / 1000 + 24 * 60 * 60 * 7;
     var endTime = new Date(this.toDate(timestamp))
-    
+
     wx.cloud.callFunction({
       name: 'addDatabase',
       data: {
         name: 'blackroom',
-      },
-      data: {
-        blackroom_startdate: startTime,
-        blackroom_finishdate: endTime,
-        user_no: this.data.userno
+        data: {
+          blackroom_startdate: startTime,
+          blackroom_finishdate: endTime,
+          user_no: this.data.userno
+        },
       },
       complete: res => {
         console.log("操作成功")
+        this.getBlacklist()
       },
     })
+
     this.setUserstatus(this.data.userno, app.globalData.STATUS_USER_BL)
     this.setData({
       isShowConfirm: false
@@ -123,6 +125,7 @@ Page({
       success: res => {
         // console.log('[数据库] [查询记录] 成功: ', res.data[0])
         var data = res.data
+        this.data.list = []
         for (var i = 0; i < data.length; i++) {
           this.getUserMsg(data[i].user_no,data[i]._id)
         }

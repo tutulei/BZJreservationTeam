@@ -122,17 +122,9 @@ Page({
 
   button2: function () {
     if (app.globalData.hasuser  ){
-      if (app.globalData.usermsg.user_status !== app.globalData.STATUS_USER_BL){
-        wx.navigateTo({
-          url: '../invite/invite'
-        })
-      }else{
-        wx.showToast({
-          title: '哼哼，老老实实在小黑屋悔过吧！',
-          icon: 'none',
-          duration: 2000
-        })
-      }
+      wx.navigateTo({
+        url: '../invite/invite'
+      })
     } else {
       wx.showToast({
         title: '请先完善个人信息',

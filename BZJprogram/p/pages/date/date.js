@@ -44,168 +44,23 @@ Page({
     yyTime: ''
   },
 
+
+  /**
+ * 生命周期函数--监听页面加载
+ */
   onLoad: function (options) {
-    console.log("ishfkjsd")
-    this.setDiffReservationMsg()
-  },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
 
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-    this.setDiffReservationMsg()
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
-
-  sure:function() {
-    if (this.data.isclick){
-      wx.navigateTo({
-        url: '../appoint/appoint?date=' + this.data.date + '&venue_id=' + this.data.venue_id
-      })
-    }else{
-      wx.showToast({
-        title: '请先选择预约时间',
-        icon: 'none',
-        duration: 2000
-      })
-    }
-  },
-
-
-  //日期选择
-  timeClick: function (e) {
-    //(所有时间点都可选择)
-    var list = this.data.hourList;
-    for (var i = 0; i < list.length; i++) {
-      list[i].isShow = true;
-    }
-    this.setData({
-      hourList: list
-    })
-    
-    this.setData({
-      currentTab: e.currentTarget.dataset.index,
-      chooseTime: this.data.timeList[e.currentTarget.dataset.index].date,
-      yyTime: '',
-      chooseHour: this.data.timeList[0],
-      hourIndex: -1
-    });
-    console.log(this.data.chooseTime)
-    this.getVenueId()
-  },
-
-  // 时间选择
-  hourClick: function (e) {
-    this.data.isclick=true;
-    var that = this;
-    // 时间不可选择
-    if (!e.currentTarget.dataset.isshow) {
-      return false;
-    }
-    this.setData({
-      hourIndex: e.currentTarget.dataset.index,
-      chooseHour: this.data.hourList[e.currentTarget.dataset.index].hour,
-
-    });
-    var chooseTime = new Date().getFullYear() + "-" + this.data.chooseTime + " " + this.data.chooseHour
-    this.setData({
-      yyTime: chooseTime
-    })
-    console.log(chooseTime)
-    this.getVenueId(this.data.chooseHour)
-    this.getStrTime(this.data.yyTime)
-  },
-
-  getVenueId: function (str) {
-    // console.log(("" + str).substr(0, 3))
-    // console.log(("" + str).substr(4))
-    var name = ("" + str).substr(0, 3)
-    var time = ("" + str).substr(4)
-    const db = wx.cloud.database()
-    db.collection('venue').where({
-      venue_name: name,
-      venue_time: time,
-    }).get({
-      success: res => {
-        var data = res.data[0]
-        // console.log(res)
-        this.setData({
-          venue_id: data._id,
-        })
-      },
-      fail: err => {
-        wx.showToast({
-          icon: 'none',
-          title: '查询记录失败'
-        })
-        console.error('[数据库] [查询记录] 失败：', err)
-      }
-    })
-
-  },
-
-  getStrTime: function (str) {
-    // console.log(("" + str).substr(0, 10))
-    this.setData({
-      date: ("" + str).substr(0, 10),
-    })
-  },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
     /**
       * 时间对象的格式化;
     */
     Date.prototype.Format = function (format) {
       var o = {
         "M+": this.getMonth() + 1,  //month
-        "d+": this.getDate()+7,     //day
+        "d+": this.getDate() + 7,     //day
         "h+": this.getHours(),    //hour
         "m+": this.getMinutes(),  //minute
         "s+": this.getSeconds(), //second
-        "q+": Math.floor((this.getMonth() + 3) / 3), 
+        "q+": Math.floor((this.getMonth() + 3) / 3),
         "S": this.getMilliseconds(), //millisecond
       }
       if (/(y+)/.test(format)) {
@@ -263,16 +118,178 @@ Page({
       chooseTime: this.data.timeList[0].date,
     });
     this.getVenueId()
+    this.setDiffReservationMsg()
+    // this.setFbdVenue(this.data.timeList[0].date)
   },
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  },
+
+  sure:function() {
+    if (this.data.isclick){
+      wx.navigateTo({
+        url: '../appoint/appoint?date=' + this.data.date + '&venue_id=' + this.data.venue_id
+      })
+    }else{
+      wx.showToast({
+        title: '请先选择预约时间',
+        icon: 'none',
+        duration: 2000
+      })
+    }
+  },
+  setFbdVenue:function(time){
+    var list = this.data.hourList;
+    for (var i = 0; i < this.data.fbdreserList.length; i++) {
+      // console.log(this.data.fbdreserList[i].date.substr(5))
+      if (this.data.fbdreserList[i].date.substr(5) === time) {
+        for (var j = 0; j < list.length; j++) {
+          // console.log(this.data.fbdreserList[i].venuename + " " + this.data.fbdreserList[i].venuetime)
+          if (this.data.fbdreserList[i].venuename + " " + this.data.fbdreserList[i].venuetime === list[j].hour) {
+            list[j].isShow = false
+          }
+        }
+        this.setData({
+          hourList: list
+        })
+      }
+    }
+  },
+  //日期选择
+  timeClick: function (e) {
+    //(所有时间点都可选择)
+    var list = this.data.hourList;
+    for (var i = 0; i < list.length; i++) {
+      list[i].isShow = true;
+    }
+    this.setData({
+      hourList: list
+    })
+    
+    this.setData({
+      currentTab: e.currentTarget.dataset.index,
+      chooseTime: this.data.timeList[e.currentTarget.dataset.index].date,
+      yyTime: '',
+      chooseHour: this.data.timeList[0],
+      hourIndex: -1
+    });
+    this.setFbdVenue(this.data.chooseTime)
+
+    console.log(this.data.chooseTime)
+    this.getVenueId()
+  },
+
+  // 时间选择
+  hourClick: function (e) {
+    this.data.isclick=true;
+    var that = this;
+    // 时间不可选择
+    if (!e.currentTarget.dataset.isshow) {
+      return false;
+    }
+    this.setData({
+      hourIndex: e.currentTarget.dataset.index,
+      chooseHour: this.data.hourList[e.currentTarget.dataset.index].hour,
+
+    });
+    var chooseTime = new Date().getFullYear() + "-" + this.data.chooseTime + " " + this.data.chooseHour
+    this.setData({
+      yyTime: chooseTime
+    })
+    console.log(chooseTime)
+    
+    this.getVenueId(this.data.chooseHour)
+    this.getStrTime(this.data.yyTime)
+  },
+
+  getVenueId: function (str) {
+    // console.log(("" + str).substr(0, 3))
+    // console.log(("" + str).substr(4))
+    var name = ("" + str).substr(0, 3)
+    var time = ("" + str).substr(4)
+    const db = wx.cloud.database()
+    db.collection('venue').where({
+      venue_name: name,
+      venue_time: time,
+    }).get({
+      success: res => {
+        var data = res.data[0]
+        // console.log(res)
+        this.setData({
+          venue_id: data._id,
+        })
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+        console.error('[数据库] [查询记录] 失败：', err)
+      }
+    })
+
+  },
+
+  getStrTime: function (str) {
+    // console.log(("" + str).substr(0, 10))
+    this.setData({
+      date: ("" + str).substr(0, 10),
+    })
+  },
+
+
   setDiffReservationMsg:function(){
     const db = wx.cloud.database();
     const _ = db.command
     db.collection('venuediffstatus').where({
-      venue_status: app.globalData.STATUS_VENUE_NO
+      venue_status: _.or(_.eq(app.globalData.STATUS_VENUE_NO), _.eq(app.globalData.STATUS_VENUE_HR))
     }).get({
       success: res => {
         var data = res.data
-        console.log(data)
         var list = [];
         for (var i = 0; i < data.length; i++) {
           var jstr = {}
@@ -283,13 +300,12 @@ Page({
           this.setData({
             fbdreserList:list
           })
-          console.log("list:"+this.data.fbdreserList)
-          this.setDiffVenueMsg(i,data[i].venue_id)
+          this.setDiffVenueMsg(i, data[i].venue_id, data.length)
         }
       }
     })
   },
-  setDiffVenueMsg:function(i,id){
+  setDiffVenueMsg:function(i,id,l){
     const db = wx.cloud.database();
     db.collection('venue').where({
       _id:id
@@ -302,6 +318,10 @@ Page({
           fbdreserList: list,
         })
         console.log(this.data.fbdreserList)
+        //暴力初始化，无法完成异步操作的妥协办法
+        if(i = l-1){
+          this.setFbdVenue(this.data.timeList[0].date)
+        }
       }
     })
   }

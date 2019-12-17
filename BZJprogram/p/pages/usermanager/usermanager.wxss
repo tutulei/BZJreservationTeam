@@ -17,8 +17,9 @@
 }
 
 #titlename {
+  display: block;
   color: white;
-  padding-right: 10px;
+  margin-left: 20px;
 }
 
 .container {
