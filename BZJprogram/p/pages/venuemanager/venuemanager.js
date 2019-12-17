@@ -7,12 +7,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    username: "管理员，你好！",
     yyPlace:'',
     yyTime: '',
     yyDate: '',
     yyStatus:'',
-    venueid: ''
   },
 
   /**
@@ -86,35 +84,76 @@ Page({
     })
   },
 
-  updateStatus: function () {
+  getVenueInfo: function () {
+      const db = wx.cloud.database()
+      db.collection('venue').where({
+        venue_addr: this.data.yyPlace,
+        venue_time: this.data.yyTime
+      }).get({
+        success: res => {
+          var venueid = res.data[0]._id
+          if (this.data.yyStatus === app.globalData.STATUS_VENUE_CR){
+            this.getRemoveid(venueid)
+          }
+          else if (this.data.yyStatus === app.globalData.STATUS_VENUE_NO) {
+            this.updateStatus(venueid)
+          }
+        },
+        fail: err => {
+          console.error('操作失败：', err)
+        }
+      })
+  },
+
+  updateStatus: function (vid) {
+    wx.cloud.callFunction({
+      name: 'addDatabase',
+      data: {
+        name: 'venuediffstatus',
+        data: {
+          venue_date: this.data.yyDate,
+          venue_id: vid,
+          venue_status: this.data.yyStatus,
+        },
+      },
+      complete: res => {
+      },
+    })
+  },
+
+  getRemoveid:function (vid){
     const db = wx.cloud.database()
-    db.collection('venue').where({
-      venue_addr: this.data.yyPlace,
-      venue_time: this.data.yyTime
+    db.collection('venuediffstatus').where({
+      venue_id: vid,
+      venue_date: this.data.yyDate,
     }).get({
       success: res => {
-        console.log(res)
-        var data = res.data[0]
-        this.setData({
-          venueid: data._id
-        })
-        db.collection('venuediffstatus').add({
-          // 要插入的数据
-          data: {
-            venue_date: this.data.yyDate,
-            venue_id: this.data.venueid,
-            venue_status: this.data.yyStatus,
-          }
-        })
+        var id = res.data[0]._id
+        console.log(id)
+        this.removeStatus(id)
+      },
+      fail: err => {
+        console.error('操作失败：', err)
       }
     })
+  },
 
-
-      
+  removeStatus: function (id) {
+    wx.cloud.callFunction({
+      name: 'removeDatabase',
+      data: {
+        name: 'venuediffstatus',
+        id: id,
+      },
+      complete: res => {
+        console.log(id)
+        console.log("操作成功")
+      },
+    })
   },
 
   submit: function () {
-    this.updateStatus()
+    this.getVenueInfo()
     wx.showToast({
       title: '成功',
       icon: 'success',
